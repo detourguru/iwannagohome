@@ -3,11 +3,12 @@
 import { cva, VariantProps } from "class-variance-authority";
 
 const buttonVariants = cva(
-  "px-7 py-8 flex items-center justify-center rounded-xl animate-bounce",
+  "w-full px-7 py-8 flex items-center justify-center rounded-xl",
   {
     variants: {
       variant: {
-        default: "h-[4vw] text-bold-20 bg-primary",
+        default: "h-[4vw] text-bold-20 bg-primary animate-bounce",
+        replay: "h-[2vw] text-bold-20 bg-gray-100",
       },
     },
     defaultVariants: {
