@@ -11,8 +11,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primary: "var(--primary)",
+        gray: {
+          50: "var(--gray-50)",
+          100: "var(--gray-100)",
+        },
+      },
+      fontSize: {
+        "regular-12": ["12px", { lineHeight: "140%", fontWeight: 400 }],
+        "regular-14": ["14px", { lineHeight: "140%", fontWeight: 400 }],
+        "regular-16": ["16px", { lineHeight: "140%", fontWeight: 400 }],
+        "regular-18": ["18px", { lineHeight: "140%", fontWeight: 400 }],
+        "regular-20": ["20px", { lineHeight: "140%", fontWeight: 400 }],
+        "bold-14": ["14px", { lineHeight: "140%", fontWeight: 700 }],
+        "bold-16": ["16px", { lineHeight: "140%", fontWeight: 700 }],
+        "bold-18": ["18px", { lineHeight: "140%", fontWeight: 700 }],
+        "bold-20": ["20px", { lineHeight: "140%", fontWeight: 700 }],
+        "bold-34": ["34px", { lineHeight: "140%", fontWeight: 700 }],
+        "bold-50": ["50px", { lineHeight: "140%", fontWeight: 700 }],
       },
     },
   },

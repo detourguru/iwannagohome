@@ -12,9 +12,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={"w-screen flex justify-center bg-brown-100"}>
-        <div className="pb-20 h-screen max-w-md w-full mx-auto p-6 shadow-lg flex flex-col items-center justify-center space-y-8">
+    <html lang="ko">
+      <body className={"w-screen bg-primary"}>
+        <div className="flex justify-center h-screen max-w-md mx-auto shadow-2xl bg-white px-5 py-12">
           {children}
         </div>
       </body>
