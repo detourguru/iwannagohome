@@ -13,7 +13,7 @@ const InputBar = ({ target }: InputBarProps) => {
       />
       <button className="w-1/12">
         <Image
-          className="w-[5vw] h-[5vw] rounded-full bg-primary p-2"
+          className="w-full h-fit rounded-full bg-primary p-2"
           alt="전송 아이콘"
           src="/svg/ic-send.svg"
           width={0}

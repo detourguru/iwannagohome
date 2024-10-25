@@ -16,7 +16,7 @@ export default async function SceneDetail({ params }: SceneDetailProps) {
       <div className="flex flex-col gap-3 flex-1 overflow-y-auto">
         <header className="flex flex-col gap-5 text-center">
           <Image
-            className="w-full object-cover h-[30vw] rounded-lg"
+            className="w-full object-cover max-h-48 rounded-lg"
             alt={currentData.alt}
             src={currentData.src}
             width={0}

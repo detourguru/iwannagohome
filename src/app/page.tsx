@@ -12,7 +12,7 @@ export default function Home() {
         당신은 어떻게 해야할까요?
       </div>
       <div className="grid grid-cols-1 gap-5 w-5/6 place-self-center">
-        <div className="bg-gray-100 h-[10vw] px-7 py-8 text-regular-14 flex items-center justify-center rounded-xl">
+        <div className="bg-gray-100 h-[4vw] px-7 py-8 text-regular-14 flex items-center justify-center rounded-xl">
           🤯 현재까지 <span className="text-bold-14">&nbsp;{123}</span>명이
           연인과 대화했어요
         </div>

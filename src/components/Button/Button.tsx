@@ -7,7 +7,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "h-[10vw] text-bold-20 bg-primary",
+        default: "h-[4vw] text-bold-20 bg-primary",
       },
     },
     defaultVariants: {
