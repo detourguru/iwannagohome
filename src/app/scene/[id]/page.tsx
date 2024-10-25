@@ -1,3 +1,4 @@
+import ChatCard from "@/components/Card/ChatCard";
 import InputBar from "@/components/Input/InputBar";
 import { IMAGE_DATA, STORY_DATA } from "@/constants/contents";
 import Image from "next/image";
@@ -30,12 +31,7 @@ export default async function SceneDetail({ params }: SceneDetailProps) {
           <hr className="h-0.5 border-t-0 bg-gray-100"></hr>
         </header>
         <section className="py-2">
-          <div className="my-4 w-fit flex flex-col gap-1">
-            <span className="text-regular-12">{currentStory.character}</span>
-            <span className="h-fit bg-primary rounded-xl py-2 px-4 items-center flex">
-              나 집에 갈래.
-            </span>
-          </div>
+          <ChatCard storyId={id} role="system" />
         </section>
       </div>
       <footer className="">
