@@ -19,13 +19,16 @@ const buttonVariants = cva(
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
-  onClick?: () => void;
+  href: string;
 }
 
-const Button = ({ children, onClick, variant }: ButtonProps) => {
+const Button = ({ children, variant, href }: ButtonProps) => {
+  const handleButtonClick = () => {
+    return (location.href = href);
+  };
   return (
     <button
-      onClick={() => onClick}
+      onClick={() => handleButtonClick()}
       className={`${buttonVariants({ variant })}`}
     >
       {children}
