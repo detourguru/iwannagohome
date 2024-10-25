@@ -29,7 +29,7 @@ const config: Config = {
         "bold-20": ["20px", { lineHeight: "140%", fontWeight: 700 }],
         "bold-24": ["24px", { lineHeight: "140%", fontWeight: 700 }],
         "bold-34": ["34px", { lineHeight: "140%", fontWeight: 700 }],
-        "bold-50": ["50px", { lineHeight: "140%", fontWeight: 700 }],
+        "bold-70": ["70px", { lineHeight: "140%", fontWeight: 700 }],
       },
     },
   },

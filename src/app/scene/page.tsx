@@ -1,5 +1,5 @@
 import SceneCard from "@/components/Card/SceneCard";
-import { IMAGE_DATA } from "@/constants/image";
+import { IMAGE_DATA } from "@/constants/contents";
 
 export default function Scene() {
   return (

@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={"w-screen bg-primary"}>
-        <div className="flex justify-center h-screen max-w-md mx-auto shadow-2xl bg-white px-5 py-12">
+        <div className="flex justify-center h-screen max-w-md mx-auto shadow-2xl bg-white px-5 py-7">
           {children}
         </div>
       </body>

@@ -8,11 +8,11 @@ export default function Home() {
         <br />
         갑자기 연인의 최후 통첩을 받게 됩니다.
         <span className="text-bold-34">&quot;나 집에 갈래!&quot;</span>
-        <span className="text-bold-50">🥺</span>
+        <span className="text-bold-70">🥺</span>
         당신은 어떻게 해야할까요?
       </div>
       <div className="grid grid-cols-1 gap-5 w-5/6 place-self-center">
-        <div className="bg-gray-100 h-[70px] px-7 py-8 text-regular-14 flex items-center justify-center rounded-xl">
+        <div className="bg-gray-100 h-[10vw] px-7 py-8 text-regular-14 flex items-center justify-center rounded-xl">
           🤯 현재까지 <span className="text-bold-14">&nbsp;{123}</span>명이
           연인과 대화했어요
         </div>
