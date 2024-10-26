@@ -21,7 +21,7 @@ const TextAccordion = ({ type }: TextAccordionProps) => {
         onClick={toggleAccordion}
         className="cursor-pointer flex flex-col gap-4"
       >
-        <div className="text-bold-24 flex justify-center flex-row gap-5">
+        <div className="text-bold-20 flex justify-center flex-row gap-5">
           {ACCOR_DATA.filter((data) => data.type === type)[0].title}
           <div className="flex flex-row gap-2 justify-center items-center text-regular-16">
             <Image

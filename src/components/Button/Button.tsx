@@ -9,8 +9,8 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "h-[4vw] px-7 py-8 text-bold-20 bg-primary animate-bounce",
-        replay: "h-fit py-3 text-bold-20 bg-gray-100",
-        share: "h-fit py-3 text-bold-20 bg-gray-400",
+        replay: "h-fit py-3 text-bold-20 text-white bg-secondary",
+        share: "h-fit py-3 text-bold-20 text-white bg-gray-500",
       },
     },
     defaultVariants: {
