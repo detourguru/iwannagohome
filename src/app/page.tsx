@@ -16,7 +16,9 @@ export default function Home() {
           🤯 현재까지 <span className="text-bold-14">&nbsp;{123}</span>명이
           연인과 대화했어요
         </div>
-        <Button href="scene">내가 뭐 잘못한거 있어..?</Button>
+        <Button href="scene" variant="default">
+          내가 뭐 잘못한거 있어..?
+        </Button>
       </div>
       <div className="flex text-gray-500 text-regular-14 text-center justify-center">
         🍯 대화 팁 🍯

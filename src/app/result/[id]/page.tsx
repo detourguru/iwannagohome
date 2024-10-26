@@ -4,7 +4,7 @@ import Button from "@/components/Button/Button";
 export default function Result() {
   // 스토리 key 값
   return (
-    <div className="w-full h-full overflow-auto flex flex-col text-center gap-5">
+    <div className="w-full h-full overflow-auto no-scrollbar flex flex-col text-center gap-5">
       <header className="flex flex-col gap-3">
         <span className="text-bold-34">우연의 속마음</span>
         <span className="text-bold-70">🥺</span>
@@ -26,9 +26,12 @@ export default function Result() {
       </section>
       <TextAccordion type="review" />
       <TextAccordion type="advise" />
-      <footer className="">
+      <footer className="flex flex-col gap-2">
         <Button href="" variant="replay">
           다시 대화하기
+        </Button>
+        <Button href="" variant="share">
+          공유하기
         </Button>
       </footer>
     </div>
