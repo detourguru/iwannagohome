@@ -2,7 +2,6 @@ import TextAccordion from "@/components/Accodion/TextAccodion";
 import Button from "@/components/Button/Button";
 
 export default function Result() {
-  // 스토리 key 값
   return (
     <div className="w-full h-full flex flex-col text-center gap-5">
       <div className="h-full overflow-auto flex flex-col gap-5">

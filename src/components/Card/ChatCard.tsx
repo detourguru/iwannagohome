@@ -1,11 +1,10 @@
-import { STORY_DATA } from "@/constants/contents";
+import { BaseStory } from "@/type/responseType";
 
 interface ChatCardProps {
-  storyId: string;
+  story: BaseStory;
   role: string;
 }
-export default function ChatCard({ storyId, role }: ChatCardProps) {
-  const currentStory = STORY_DATA.filter((data) => data.id === storyId)[0];
+export default function ChatCard({ story, role }: ChatCardProps) {
   const isUser = role !== "system" ? true : false;
   return (
     <div
@@ -13,15 +12,13 @@ export default function ChatCard({ storyId, role }: ChatCardProps) {
         isUser ? "ml-auto" : "justify-start"
       }`}
     >
-      {!isUser && (
-        <span className="text-regular-12">{currentStory.character}</span>
-      )}
+      {!isUser && <span className="text-regular-12">{story.character}</span>}
       <span
         className={`h-fit rounded-xl py-2 px-4 items-center flex ${
           role === "system" ? "bg-primary" : "bg-gray-100"
         }`}
       >
-        {currentStory.initChat}
+        {story.init}
       </span>
     </div>
   );

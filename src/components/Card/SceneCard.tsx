@@ -1,21 +1,19 @@
 "use client";
 
-import { IMAGE_DATA } from "@/constants/contents";
+import { BaseStory } from "@/type/responseType";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 
 interface SceneCardProps extends PropsWithChildren {
-  id: string;
+  story: BaseStory;
 }
 
-const SceneCard = ({ id }: SceneCardProps) => {
+const SceneCard = ({ story }: SceneCardProps) => {
   const router = useRouter();
 
-  const currentData = IMAGE_DATA.filter((data) => data.id === id)[0];
-
   const handleOnClick = () => {
-    return router.push(`/scene/${currentData.id}`);
+    return router.push(`/scene/${story.story_id}`);
   };
 
   return (
@@ -26,18 +24,18 @@ const SceneCard = ({ id }: SceneCardProps) => {
       <div className="w-full">
         <Image
           className="w-full h-40 object-cover rounded-lg"
-          src={currentData.src}
-          alt={currentData.alt}
+          src={story.image_src}
+          alt={story.story_info.alt}
           width={0}
           height={0}
           sizes="100vw"
         />
       </div>
       <div>
-        <h2 className="text-bold-18 text-center">{currentData.title}</h2>
+        <h2 className="text-bold-18 text-center">{story.story_info.title}</h2>
       </div>
       <div className="flex justify-center items-center text-gray-700 text-regular-14">
-        <span>난이도: {currentData.difficulty}</span>
+        <span>난이도: {story.story_info.difficulty}</span>
       </div>
     </li>
   );
