@@ -19,7 +19,7 @@ export default function SceneDetail() {
             <Image
               className="w-full object-cover max-h-48 rounded-lg"
               alt={data.story_info.alt}
-              src={data.image_src}
+              src={data.story_info.image_src}
               width={0}
               height={0}
               sizes="100vw"
@@ -35,7 +35,7 @@ export default function SceneDetail() {
           </section>
         </div>
         <footer className="">
-          <InputBar target={data.character} />
+          <InputBar target={data.story_info.character} />
         </footer>
       </div>
     )

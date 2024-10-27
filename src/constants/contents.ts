@@ -1,15 +1,15 @@
 export const initBaseStoryResponse = {
   id: 0,
   story_id: "",
-  character: "",
   story: "",
-  init: "",
   personality: "",
-  image_src: "",
   story_info: {
     alt: "",
     title: "",
     difficulty: "",
+    character: "",
+    init: "",
+    image_src: "",
   },
 };
 

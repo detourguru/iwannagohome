@@ -24,7 +24,7 @@ const SceneCard = ({ story }: SceneCardProps) => {
       <div className="w-full">
         <Image
           className="w-full h-40 object-cover rounded-lg"
-          src={story.image_src}
+          src={story.story_info.image_src}
           alt={story.story_info.alt}
           width={0}
           height={0}

@@ -12,13 +12,15 @@ export default function ChatCard({ story, role }: ChatCardProps) {
         isUser ? "ml-auto" : "justify-start"
       }`}
     >
-      {!isUser && <span className="text-regular-12">{story.character}</span>}
+      {!isUser && (
+        <span className="text-regular-12">{story.story_info.character}</span>
+      )}
       <span
         className={`h-fit rounded-xl py-2 px-4 items-center flex ${
           role === "system" ? "bg-primary" : "bg-gray-100"
         }`}
       >
-        {story.init}
+        {story.story_info.init}
       </span>
     </div>
   );
