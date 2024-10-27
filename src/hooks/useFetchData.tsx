@@ -1,13 +1,20 @@
-import { initBaseStoryResponse } from "@/constants/contents";
+import { BaseStoryType } from "@/type/common";
 import { useEffect, useState } from "react";
 
-export default function useFetchData(path: string) {
-  const [data, setData] = useState([initBaseStoryResponse]);
+interface FetchDataProps {
+  path: string;
+  init: BaseStoryType;
+  body?: any;
+}
+
+export default function useFetchData({ path, init, body }: FetchDataProps) {
+  const [data, setData] = useState([init]);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`/api${path}`);
+        const response = await fetch(`/api${path}`, body);
         if (!response.ok) {
           throw new Error("문제가 발생했습니다.");
         }
@@ -19,7 +26,7 @@ export default function useFetchData(path: string) {
     };
 
     fetchData();
-  }, []);
+  });
 
   return { data, isLoading };
 }

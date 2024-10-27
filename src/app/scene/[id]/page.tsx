@@ -2,14 +2,24 @@
 
 import ChatCard from "@/components/Card/ChatCard";
 import InputBar from "@/components/Input/InputBar";
+import { initBaseStoryResponse } from "@/constants/contents";
 import useFetchData from "@/hooks/useFetchData";
+import useHandleEvent from "@/hooks/useHandleEvent";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 export default function SceneDetail() {
   const path = usePathname();
-  const { data: baseStory, isLoading } = useFetchData(path);
+
+  const { data: baseStory, isLoading } = useFetchData({
+    path: path,
+    init: initBaseStoryResponse,
+  });
+
   const data = baseStory[0];
+
+  const { chat, history, setChat, handleOnClick, handleSubmit } =
+    useHandleEvent(data);
 
   return (
     !isLoading && (
@@ -31,11 +41,23 @@ export default function SceneDetail() {
             <hr className="h-0.5 border-t-0 bg-gray-100"></hr>
           </header>
           <section className="py-2">
-            <ChatCard story={data} role="system" />
+            {history.map((item, index) => (
+              <ChatCard
+                key={index}
+                chat={item}
+                target={data.story_info.character}
+              />
+            ))}
           </section>
         </div>
         <footer className="">
-          <InputBar target={data.story_info.character} />
+          <InputBar
+            story={data}
+            onClick={handleOnClick}
+            onSubmit={handleSubmit}
+            chat={chat}
+            setChat={setChat}
+          />
         </footer>
       </div>
     )

@@ -1,12 +1,12 @@
 "use client";
 
-import { BaseStory } from "@/type/responseType";
+import { BaseStoryType } from "@/type/common";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 
 interface SceneCardProps extends PropsWithChildren {
-  story: BaseStory;
+  story: BaseStoryType;
 }
 
 const SceneCard = ({ story }: SceneCardProps) => {

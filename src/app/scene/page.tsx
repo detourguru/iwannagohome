@@ -1,12 +1,16 @@
 "use client";
 
 import SceneCard from "@/components/Card/SceneCard";
+import { initBaseStoryResponse } from "@/constants/contents";
 import useFetchData from "@/hooks/useFetchData";
 import { usePathname } from "next/navigation";
 
 export default function Scene() {
   const path = usePathname();
-  const { data: baseStory, isLoading } = useFetchData(path);
+  const { data: baseStory, isLoading } = useFetchData({
+    path: path,
+    init: initBaseStoryResponse,
+  });
 
   return (
     <section className="w-full h-full overflow-auto flex flex-col gap-5">
