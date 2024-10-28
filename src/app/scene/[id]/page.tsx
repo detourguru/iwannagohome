@@ -5,7 +5,7 @@ import InputBar from "@/components/Input/InputBar";
 import { initBaseStoryResponse } from "@/constants/contents";
 import useAutoScroll from "@/hooks/useAutoScroll";
 import useFetchData from "@/hooks/useFetchData";
-import useHandleEvent from "@/hooks/useHandleEvent";
+import useHandleChatEvent from "@/hooks/useHandleChatEvent";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
@@ -20,7 +20,7 @@ export default function SceneDetail() {
   const data = baseStory[0];
 
   const { chat, history, setChat, handleOnClick, handleSubmit } =
-    useHandleEvent(data);
+    useHandleChatEvent(data);
 
   const { bottomRef } = useAutoScroll(history);
 

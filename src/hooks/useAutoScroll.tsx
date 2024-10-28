@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-export default function useAutoScroll(array: any) {
+export default function useAutoScroll<T>(array: T[]) {
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

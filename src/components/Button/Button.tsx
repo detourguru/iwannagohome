@@ -1,6 +1,6 @@
 "use client";
 
-import useHandleEvent from "@/hooks/useHandleEvent";
+import useHandleResultEvent from "@/hooks/useHandleResultEvent";
 import { cva, VariantProps } from "class-variance-authority";
 
 const buttonVariants = cva(
@@ -26,7 +26,7 @@ export interface ButtonProps
 }
 
 const Button = ({ children, variant, href }: ButtonProps) => {
-  const { handleButtonClick } = useHandleEvent();
+  const { handleButtonClick } = useHandleResultEvent();
   return (
     <button
       onClick={() => handleButtonClick({ variant, href })}
