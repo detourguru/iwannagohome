@@ -1,21 +1,29 @@
 "use client";
 
-import { BaseStoryType } from "@/type/common";
-import { KeyboardEvent, useState } from "react";
+import { BaseStoryType, GeminiChatHistoryType } from "@/type/common";
+import { KeyboardEvent, useEffect, useState } from "react";
 
-export default function useHandleChatEvent(data: BaseStoryType) {
+export default function useHandleChatEvent(
+  baseStory: BaseStoryType[],
+  isLoading: boolean
+) {
   const [chat, setChat] = useState("");
-  const [history, setHistory] = useState([
-    {
-      role: "user",
-      parts: [{ text: data.personality }],
-      hidden: true,
-    },
-    {
-      role: "system",
-      parts: [{ text: data.story_info.init }],
-    },
-  ]);
+  const [history, setHistory] = useState<GeminiChatHistoryType[] | []>([]);
+  useEffect(() => {
+    if (!isLoading && baseStory) {
+      setHistory([
+        {
+          role: "user",
+          parts: [{ text: baseStory[0].personality }],
+          hidden: true,
+        },
+        {
+          role: "system",
+          parts: [{ text: baseStory[0].story_info.init }],
+        },
+      ]);
+    }
+  }, [isLoading, baseStory]);
 
   const handleChat = (chat: string) => {
     setHistory([

@@ -2,7 +2,6 @@
 
 import ChatCard from "@/components/Card/ChatCard";
 import InputBar from "@/components/Input/InputBar";
-import { initBaseStoryResponse } from "@/constants/contents";
 import useAutoScroll from "@/hooks/useAutoScroll";
 import useFetchData from "@/hooks/useFetchData";
 import useHandleChatEvent from "@/hooks/useHandleChatEvent";
@@ -14,32 +13,31 @@ export default function SceneDetail() {
 
   const { data: baseStory, isLoading } = useFetchData({
     path: path,
-    init: initBaseStoryResponse,
   });
 
-  const data = baseStory[0];
-
   const { chat, history, setChat, handleOnClick, handleSubmit } =
-    useHandleChatEvent(data);
+    useHandleChatEvent(baseStory, isLoading);
 
   const { bottomRef } = useAutoScroll(history);
 
   return (
-    !isLoading && (
+    baseStory && (
       <div className="flex flex-col gap-5 h-full">
         <div className="flex flex-col gap-3 flex-1 overflow-y-auto no-scrollbar">
           <header className="flex flex-col gap-5 text-center">
             <Image
               className="w-full object-cover max-h-48 rounded-lg"
-              alt={data.story_info.alt}
-              src={data.story_info.image_src}
+              alt={baseStory[0].story_info.alt}
+              src={baseStory[0].story_info.image_src}
               width={0}
               height={0}
               sizes="100vw"
             />
             <div className="flex flex-col gap-1">
-              <span className="text-bold-14">{data.story_info.title}</span>
-              <span className="text-regular-14">{data.story}</span>
+              <span className="text-bold-14">
+                {baseStory[0].story_info.title}
+              </span>
+              <span className="text-regular-14">{baseStory[0].story}</span>
             </div>
             <hr className="h-0.5 border-t-0 bg-gray-100"></hr>
           </header>
@@ -48,7 +46,7 @@ export default function SceneDetail() {
               <ChatCard
                 key={index}
                 chat={item}
-                target={data.story_info.character}
+                target={baseStory[0].story_info.character}
               />
             ))}
           </section>
@@ -56,7 +54,7 @@ export default function SceneDetail() {
         </div>
         <footer className="">
           <InputBar
-            story={data}
+            story={baseStory[0]}
             onClick={handleOnClick}
             onSubmit={handleSubmit}
             chat={chat}

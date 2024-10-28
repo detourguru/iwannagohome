@@ -3,12 +3,11 @@ import { useEffect, useState } from "react";
 
 interface FetchDataProps {
   path: string;
-  init: BaseStoryType;
-  body?: any;
+  body?: RequestInit;
 }
 
-export default function useFetchData({ path, init, body }: FetchDataProps) {
-  const [data, setData] = useState([init]);
+export default function useFetchData({ path, body }: FetchDataProps) {
+  const [data, setData] = useState<BaseStoryType[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
