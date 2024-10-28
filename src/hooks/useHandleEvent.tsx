@@ -34,11 +34,13 @@ export default function useHandleEvent(data?: BaseStoryType) {
   };
 
   const handleChat = (chat: string) => {
-    history.push({
-      role: "user",
-      parts: [{ text: chat }],
-    });
-    setHistory(history);
+    setHistory([
+      ...history,
+      {
+        role: "user",
+        parts: [{ text: chat }],
+      },
+    ]);
   };
 
   const handleOnClick = (text: string) => {

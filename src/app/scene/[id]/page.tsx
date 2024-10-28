@@ -3,6 +3,7 @@
 import ChatCard from "@/components/Card/ChatCard";
 import InputBar from "@/components/Input/InputBar";
 import { initBaseStoryResponse } from "@/constants/contents";
+import useAutoScroll from "@/hooks/useAutoScroll";
 import useFetchData from "@/hooks/useFetchData";
 import useHandleEvent from "@/hooks/useHandleEvent";
 import Image from "next/image";
@@ -20,6 +21,8 @@ export default function SceneDetail() {
 
   const { chat, history, setChat, handleOnClick, handleSubmit } =
     useHandleEvent(data);
+
+  const { bottomRef } = useAutoScroll(history);
 
   return (
     !isLoading && (
@@ -49,6 +52,7 @@ export default function SceneDetail() {
               />
             ))}
           </section>
+          <div ref={bottomRef} />
         </div>
         <footer className="">
           <InputBar

@@ -26,7 +26,7 @@ export default function useFetchData({ path, init, body }: FetchDataProps) {
     };
 
     fetchData();
-  });
+  }, [path, body]);
 
   return { data, isLoading };
 }
