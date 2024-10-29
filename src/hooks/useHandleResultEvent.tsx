@@ -3,10 +3,10 @@
 import { ButtonProps } from "@/components/Button/Button";
 import { usePathname } from "next/navigation";
 
-export default function useHandleResultEvent() {
+export default function useHandleResultEvent({ variant, href }: ButtonProps) {
   const current = usePathname();
 
-  const handleButtonClick = ({ variant, href }: ButtonProps) => {
+  const handleButtonClick = () => {
     if (variant === "default" || variant === "replay") {
       return (location.href = href);
     } else if (variant === "share") {

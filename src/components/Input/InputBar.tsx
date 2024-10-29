@@ -10,6 +10,7 @@ interface InputBarProps {
   onClick: (text: string) => void;
   chat: string;
   setChat: (chat: string) => void;
+  turnLength: number;
 }
 
 const InputBar = ({
@@ -18,12 +19,18 @@ const InputBar = ({
   onSubmit,
   chat,
   setChat,
+  turnLength,
 }: InputBarProps) => {
   return (
     <div className="w-full flex flex-row gap-2">
       <input
+        readOnly={turnLength >= 15 ? true : false}
         className="w-11/12 text-regular-14 placeholder:text-gray-400 border border-gray-100 rounded-md p-2 focus:outline-none focus:border-slate-400"
-        placeholder={`${story.story_info.character}에게 말을 걸어보세요.`}
+        placeholder={
+          turnLength >= 15
+            ? "더 이상 입력할 수 없습니다."
+            : `${story.story_info.character}에게 말을 걸어보세요.`
+        }
         value={chat}
         onChange={(e) => setChat(e.target.value)}
         onKeyUp={(e) => onSubmit(e)}

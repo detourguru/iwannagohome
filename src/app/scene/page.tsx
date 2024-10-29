@@ -1,12 +1,12 @@
 "use client";
 
 import SceneCard from "@/components/Card/SceneCard";
-import useFetchData from "@/hooks/useFetchData";
+import useFetchStoryData from "@/hooks/useFetchStoryData";
 import { usePathname } from "next/navigation";
 
 export default function Scene() {
   const path = usePathname();
-  const { data: baseStory } = useFetchData({
+  const { data: baseStory } = useFetchStoryData({
     path: path,
   });
 

@@ -1,17 +1,20 @@
 "use client";
 
+import AnalyzeButton from "@/components/Button/AnalyzeButton";
 import ChatCard from "@/components/Card/ChatCard";
 import InputBar from "@/components/Input/InputBar";
 import useAutoScroll from "@/hooks/useAutoScroll";
-import useFetchData from "@/hooks/useFetchData";
+import useFetchStoryData from "@/hooks/useFetchStoryData";
 import useHandleChatEvent from "@/hooks/useHandleChatEvent";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { v4 } from "uuid";
 
 export default function SceneDetail() {
   const path = usePathname();
+  const chatId = v4();
 
-  const { data: baseStory, isLoading } = useFetchData({
+  const { data: baseStory, isLoading } = useFetchStoryData({
     path: path,
   });
 
@@ -21,6 +24,18 @@ export default function SceneDetail() {
   const { bottomRef } = useAutoScroll(history);
 
   const noScriptHistory = history.slice(1);
+  const turnLength = noScriptHistory.filter(
+    (history) => history.role === "user"
+  ).length;
+
+  const body = {
+    method: "POST",
+    body: JSON.stringify({
+      chat_id: chatId,
+      chat_history: noScriptHistory,
+      story_id: path.split("/")[path.split("/").length - 1],
+    }),
+  };
 
   return (
     baseStory && (
@@ -54,13 +69,21 @@ export default function SceneDetail() {
           </section>
           <div ref={bottomRef} />
         </div>
-        <footer className="">
+        <footer className="flex flex-col items-center">
+          {turnLength >= 0 && (
+            <div className="h-fit cursor-pointer">
+              <AnalyzeButton href={`/result/${chatId}`} body={body}>
+                분석하기
+              </AnalyzeButton>
+            </div>
+          )}
           <InputBar
             story={baseStory[0]}
             onClick={handleOnClick}
             onSubmit={handleSubmit}
             chat={chat}
             setChat={setChat}
+            turnLength={turnLength}
           />
         </footer>
       </div>

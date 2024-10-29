@@ -11,6 +11,8 @@ const buttonVariants = cva(
         default: "h-[4vw] px-7 py-8 text-bold-20 bg-primary animate-bounce",
         replay: "h-fit py-3 text-bold-20 text-white bg-secondary",
         share: "h-fit py-3 text-bold-20 text-white bg-gray-500",
+        analyze:
+          "h-fit mb-4 p-2 text-regular-12 text-white bg-secondary animate-pulse",
       },
     },
     defaultVariants: {
@@ -23,13 +25,19 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   href: string;
+  body?: any;
 }
 
-const Button = ({ children, variant, href }: ButtonProps) => {
-  const { handleButtonClick } = useHandleResultEvent();
+const Button = ({ children, variant, href, body }: ButtonProps) => {
+  const { handleButtonClick } = useHandleResultEvent({
+    variant: variant,
+    href: href,
+    body: body,
+  });
+
   return (
     <button
-      onClick={() => handleButtonClick({ variant, href })}
+      onClick={() => handleButtonClick()}
       className={`${buttonVariants({ variant })}`}
     >
       {children}

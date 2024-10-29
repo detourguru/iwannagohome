@@ -1,15 +1,14 @@
-import { BaseStoryType } from "@/type/common";
+import { ChatType } from "@/type/common";
 import { useEffect, useState } from "react";
 
 interface FetchDataProps {
   path: string;
-  body?: RequestInit;
+  body?: any;
 }
 
-export default function useFetchData({ path, body }: FetchDataProps) {
-  const [data, setData] = useState<BaseStoryType[] | null>(null);
+export default function useFetchChatData({ path, body }: FetchDataProps) {
+  const [data, setData] = useState<ChatType[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
