@@ -18,7 +18,6 @@ export type BaseStoryType = {
 export type GeminiChatHistoryType = {
   role: string;
   parts: { text: string }[];
-  hidden?: boolean;
 };
 
 export type ChatType = {

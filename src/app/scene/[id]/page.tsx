@@ -20,6 +20,8 @@ export default function SceneDetail() {
 
   const { bottomRef } = useAutoScroll(history);
 
+  const noScriptHistory = history.slice(1);
+
   return (
     baseStory && (
       <div className="flex flex-col gap-5 h-full">
@@ -42,7 +44,7 @@ export default function SceneDetail() {
             <hr className="h-0.5 border-t-0 bg-gray-100"></hr>
           </header>
           <section className="py-2">
-            {history.map((item, index) => (
+            {noScriptHistory.map((item, index) => (
               <ChatCard
                 key={index}
                 chat={item}
