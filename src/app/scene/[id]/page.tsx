@@ -41,6 +41,7 @@ export default function SceneDetail() {
 
   useEffect(() => {
     if (baseStory) {
+      // TODO: 분리
       setText(`
         아래 제공되는 데이터를 바탕으로, 당신은 다음과 같은 요약 자료를 제공해야합니다.
         - character: ${baseStory[0].story_info.character}
@@ -101,7 +102,7 @@ export default function SceneDetail() {
           <div ref={bottomRef} />
         </div>
         <footer className="flex flex-col items-center">
-          {turnLength >= 0 && (
+          {turnLength >= 5 && (
             <div className="h-fit cursor-pointer">
               <AnalyzeButton href={`/result/${chatId}`} body={body} text={text}>
                 분석하기
