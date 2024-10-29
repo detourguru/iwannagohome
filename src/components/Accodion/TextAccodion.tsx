@@ -1,14 +1,16 @@
 "use client";
 
 import { ACCOR_DATA } from "@/constants/contents";
+import { ChatType } from "@/type/common";
 import Image from "next/image";
 import React, { useState } from "react";
 
 interface TextAccordionProps {
   type: string;
+  data: ChatType;
 }
 
-const TextAccordion = ({ type }: TextAccordionProps) => {
+const TextAccordion = ({ type, data }: TextAccordionProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleAccordion = () => {
@@ -35,10 +37,9 @@ const TextAccordion = ({ type }: TextAccordionProps) => {
             <span>{isOpen ? "접기" : "펼치기"}</span>
           </div>
         </div>
+        {/* TODO: 범용성 추가 */}
         {isOpen && (
-          <div className="text-regular-16">
-            {ACCOR_DATA.filter((data) => data.type === type)[0].text}
-          </div>
+          <div className="text-regular-16">{data.chat_analyze.advise}</div>
         )}
       </div>
     </div>

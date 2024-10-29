@@ -3,7 +3,7 @@
 
 import { BaseStoryType, GeminiChatHistoryType } from "@/type/common";
 import { KeyboardEvent, useEffect, useState } from "react";
-import useGeminiChat from "./useGeminiChat";
+import useGeminiChat from "@/hooks/useGeminiChat";
 
 export default function usehandleAddChatEvent(
   baseStory: BaseStoryType[] | null,
@@ -12,7 +12,7 @@ export default function usehandleAddChatEvent(
   const [chat, setChat] = useState("");
   const [history, setHistory] = useState<GeminiChatHistoryType[] | []>([]);
 
-  const { askGemini } = useGeminiChat({ chatHistory: history, newChat: chat });
+  const { askGeminiBot } = useGeminiChat();
 
   useEffect(() => {
     const createInitHistory = () => {
@@ -52,7 +52,10 @@ export default function usehandleAddChatEvent(
   };
 
   const handleAddAnswer = async () => {
-    const data = await askGemini();
+    const data = await askGeminiBot({
+      chatHistory: history,
+      newChat: chat,
+    });
     setHistory((prev) => [...prev, { role: "model", parts: [{ text: data }] }]);
   };
   const handleSubmit = (e: KeyboardEvent<HTMLInputElement>) => {

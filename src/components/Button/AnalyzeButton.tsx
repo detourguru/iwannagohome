@@ -1,15 +1,45 @@
 "use client";
 
-import { useState } from "react";
+import useGeminiChat from "@/hooks/useGeminiChat";
 
 export interface AnalyzeButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   href: string;
-  body?: any;
+  body: {
+    method: string;
+    body: string;
+  };
+  text: string;
 }
 
-const AnalyzeButton = ({ children, href, body }: AnalyzeButtonProps) => {
-  const [loading, setLoading] = useState(true);
+const AnalyzeButton = ({ children, href, body, text }: AnalyzeButtonProps) => {
+  const { askGemini } = useGeminiChat();
+
+  const handleInsertAnalyze = async () => {
+    const gemini = JSON.parse(
+      (await askGemini(text)).replaceAll("```", "").replaceAll("json", "")
+    );
+
+    const analyze = {
+      chat_id: JSON.parse(body.body).chat_id,
+      summary: gemini.summary,
+      result: {
+        title: `${gemini.result.status}`,
+        context: gemini.result.context,
+      },
+      advise: gemini.advise,
+    };
+
+    const response = await fetch(`/api/analyze`, {
+      method: "POST",
+      body: JSON.stringify(analyze),
+    }).finally(() => {
+      return (location.href = href);
+    });
+    if (!response.ok) {
+      throw new Error("문제가 발생했습니다.");
+    }
+  };
 
   // TODO: 공통 모듈로 합체
   const handleButtonClick = async () => {
@@ -19,10 +49,7 @@ const AnalyzeButton = ({ children, href, body }: AnalyzeButtonProps) => {
         throw new Error("문제가 발생했습니다.");
       }
     } finally {
-      setLoading(false);
-      if (!loading) {
-        return (location.href = href);
-      }
+      handleInsertAnalyze();
     }
   };
 
