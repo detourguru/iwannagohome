@@ -31,6 +31,6 @@ export type ChatType = {
 type ChatAnalyzeType = {
   chat_id: UUID;
   summary: string;
-  result: { title: string; context: string };
+  result: { title: string; context: string; emoji: string };
   advise: string;
 };

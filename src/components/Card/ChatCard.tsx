@@ -3,9 +3,10 @@ import { GeminiChatHistoryType } from "@/type/common";
 interface ChatCardProps {
   chat: GeminiChatHistoryType;
   target: string;
+  preview?: boolean;
 }
 
-export default function ChatCard({ chat, target }: ChatCardProps) {
+export default function ChatCard({ chat, target, preview }: ChatCardProps) {
   const isUser = chat.role !== "model" ? true : false;
   return (
     <div
@@ -15,7 +16,9 @@ export default function ChatCard({ chat, target }: ChatCardProps) {
     >
       {!isUser && <span className="text-regular-12">{target}</span>}
       <span
-        className={`h-fit rounded-xl py-2 px-4 items-center flex ${
+        className={`h-fit ${
+          preview ? "text-xs" : ""
+        } rounded-xl py-2 px-4 items-center flex ${
           chat.role === "model" ? "bg-primary" : "bg-gray-100"
         }`}
       >

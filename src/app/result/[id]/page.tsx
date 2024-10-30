@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 export default function Result() {
   const current = usePathname();
-  const { data, isLoading } = useFetchChatData({ path: current });
+  const { data } = useFetchChatData({ path: current });
   return (
     data && (
       <div className="w-full h-full flex flex-col text-center gap-5">
@@ -16,7 +16,9 @@ export default function Result() {
             <span className="text-bold-34">
               {data[0].base_story.story_info.title}
             </span>
-            <span className="text-bold-70">🥺</span>
+            <span className="text-bold-70">
+              {data[0].chat_analyze.result.emoji}
+            </span>
             <span className="text-regular-16">
               {data[0].chat_analyze.summary}
             </span>
@@ -27,13 +29,13 @@ export default function Result() {
             </span>
             <span>{data[0].chat_analyze.result.context}</span>
           </section>
+          <TextAccordion type="review" data={data[0]} />
           <TextAccordion type="advise" data={data[0]} />
         </div>
         <footer className="flex flex-col gap-2">
           <Button
             href={`
-        ${process.env.NEXT_PUBLIC_HOST_NAME + "/scene"}
-            
+        ${process.env.NEXT_PUBLIC_HOST_NAME + "/scene/" + data[0].story_id}
             `}
             variant="replay"
           >

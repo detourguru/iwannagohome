@@ -24,7 +24,8 @@ const AnalyzeButton = ({ children, href, body, text }: AnalyzeButtonProps) => {
       chat_id: JSON.parse(body.body).chat_id,
       summary: gemini.summary,
       result: {
-        title: `${gemini.result.status}`,
+        title: gemini.result.status,
+        emoji: gemini.result.emoji,
         context: gemini.result.context,
       },
       advise: gemini.advise,
