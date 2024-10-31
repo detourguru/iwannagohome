@@ -35,6 +35,9 @@ export default function Result() {
           <TextAccordion type="advise" data={data[0]} />
         </div>
         <footer className="flex flex-col gap-2">
+          <Button variant="home" href="/">
+            홈으로 가기
+          </Button>
           <Button
             href={`
         ${process.env.NEXT_PUBLIC_HOST_NAME + "/scene/" + data[0].story_id}

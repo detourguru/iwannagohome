@@ -7,13 +7,13 @@ export default function useHandleResultEvent({ variant, href }: ButtonProps) {
   const current = usePathname();
 
   const handleButtonClick = () => {
-    if (variant === "default" || variant === "replay") {
-      return (location.href = href);
-    } else if (variant === "share") {
+    if (variant === "share") {
       navigator.clipboard.writeText(
         process.env.NEXT_PUBLIC_HOST_NAME + current
       );
       alert("복사 되었습니다.");
+    } else {
+      return (location.href = href);
     }
   };
 
