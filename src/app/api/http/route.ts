@@ -1,4 +1,4 @@
-import useErrorReport from "@/hooks/useErrorReport";
+import errorReport from "@/utils/errorReport";
 import { supabase } from "@/utils/supabaseClient";
 import { NextResponse } from "next/server";
 
@@ -14,7 +14,7 @@ export async function POST(request: Request) {
   });
 
   if (error) {
-    useErrorReport(request, error);
+    errorReport(request, error);
     return NextResponse.json({ message: error.message, status: 500, data });
   }
 

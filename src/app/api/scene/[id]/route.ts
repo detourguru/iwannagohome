@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/utils/supabaseClient";
-import useErrorReport from "@/hooks/useErrorReport";
+import errorReport from "@/utils/errorReport";
 
 export async function GET(request: NextRequest) {
   const { pathname } = new URL(request.url);
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
   const { error } = await supabase.from("chat").insert(request.body);
 
   if (error) {
-    useErrorReport(request, error);
+    await errorReport(request, error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 

@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/utils/supabaseClient";
-import useErrorReport from "@/hooks/useErrorReport";
 
 export async function GET() {
   const { data, error } = await supabase.from("chat").select("*");

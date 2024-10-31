@@ -1,11 +1,11 @@
 import { PostgrestError } from "@supabase/supabase-js";
 
-export default async function useErrorReport(
+export default async function errorReport(
   request: Request,
   error: PostgrestError | null
 ) {
   const req = await request.json();
-  const data = await fetch(process.env.NEXT_PUBLIC_HOST_NAME + "/api/http", {
+  await fetch(process.env.NEXT_PUBLIC_HOST_NAME + "/api/http", {
     method: "POST",
     body: JSON.stringify({
       method: request.method,
@@ -17,6 +17,4 @@ export default async function useErrorReport(
       status_code: status,
     }),
   });
-
-  return { data };
 }
