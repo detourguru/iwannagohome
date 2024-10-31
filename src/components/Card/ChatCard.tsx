@@ -1,4 +1,5 @@
 import { GeminiChatHistoryType } from "@/type/common";
+import Image from "next/image";
 
 interface ChatCardProps {
   chat: GeminiChatHistoryType;
@@ -8,6 +9,7 @@ interface ChatCardProps {
 
 export default function ChatCard({ chat, target, preview }: ChatCardProps) {
   const isUser = chat.role !== "model" ? true : false;
+  const loading = !isUser && chat.parts[0].text === "loading" ? true : false;
   return (
     <div
       className={`my-4 w-fit flex flex-col gap-1 ${
@@ -22,7 +24,18 @@ export default function ChatCard({ chat, target, preview }: ChatCardProps) {
           chat.role === "model" ? "bg-primary" : "bg-gray-100"
         }`}
       >
-        {chat.parts[0].text}
+        {loading ? (
+          <Image
+            className="w-6"
+            width={0}
+            height={0}
+            sizes="100vw"
+            alt="loading"
+            src="/svg/ic-loading.svg"
+          />
+        ) : (
+          chat.parts[0].text
+        )}
       </span>
     </div>
   );

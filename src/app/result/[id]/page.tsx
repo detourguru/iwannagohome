@@ -2,15 +2,17 @@
 
 import TextAccordion from "@/components/Accodion/TextAccodion";
 import Button from "@/components/Button/Button";
+import Loading from "@/components/Loading/Loading";
 import useFetchChatData from "@/hooks/useFetchChatData";
 import { usePathname } from "next/navigation";
 
 export default function Result() {
   const current = usePathname();
-  const { data } = useFetchChatData({ path: current });
+  const { data, isLoading } = useFetchChatData({ path: current });
   return (
     data && (
       <div className="w-full h-full flex flex-col text-center gap-5">
+        <Loading isLoading={isLoading} />
         <div className="h-full overflow-auto flex flex-col gap-5">
           <header className="flex flex-col gap-3">
             <span className="text-bold-34">

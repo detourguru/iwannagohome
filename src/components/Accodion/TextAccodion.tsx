@@ -37,7 +37,7 @@ const TextAccordion = ({ type, data }: TextAccordionProps) => {
             <span>{isOpen ? "접기" : "펼치기"}</span>
           </div>
         </div>
-        {/* TODO: 범용성 추가 */}
+
         {isOpen && type === "review" && (
           <div className="text-regular-16 p-2 text-start">
             {data.chat_history.map((item, index) => (

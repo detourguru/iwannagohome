@@ -12,7 +12,7 @@ export default function usehandleAddChatEvent(
   const [chat, setChat] = useState("");
   const [history, setHistory] = useState<GeminiChatHistoryType[] | []>([]);
 
-  const { askGeminiBot } = useGeminiChat();
+  const { askGeminiBot, geminiIsLoading } = useGeminiChat();
 
   useEffect(() => {
     const createInitHistory = () => {
@@ -33,6 +33,12 @@ export default function usehandleAddChatEvent(
     createInitHistory();
   }, [isLoading, baseStory, history]);
 
+  const handleGeminiLoading = () => {
+    if (geminiIsLoading) {
+      return;
+    }
+  };
+
   const handleAddChat = (chat: string, role: string) => {
     setHistory([
       ...history,
@@ -44,6 +50,8 @@ export default function usehandleAddChatEvent(
   };
 
   const handleOnClick = (text: string) => {
+    handleGeminiLoading();
+
     if (text.length > 0) {
       handleAddChat(text, "user");
       setChat("");
@@ -59,6 +67,7 @@ export default function usehandleAddChatEvent(
     setHistory((prev) => [...prev, { role: "model", parts: [{ text: data }] }]);
   };
   const handleSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
+    handleGeminiLoading();
     if (e.currentTarget.value !== "" && e.key === "Enter") {
       handleAddChat(e.currentTarget.value, "user");
       setChat("");
@@ -66,5 +75,12 @@ export default function usehandleAddChatEvent(
     }
   };
 
-  return { chat, handleOnClick, handleSubmit, history, setChat };
+  return {
+    chat,
+    handleOnClick,
+    handleSubmit,
+    history,
+    setChat,
+    geminiIsLoading,
+  };
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import useGeminiChat from "@/hooks/useGeminiChat";
+import Loading from "../Loading/Loading";
 
 export interface AnalyzeButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -12,8 +13,14 @@ export interface AnalyzeButtonProps
   text: string;
 }
 
-const AnalyzeButton = ({ children, href, body, text }: AnalyzeButtonProps) => {
-  const { askGemini } = useGeminiChat();
+const AnalyzeButton = ({
+  children,
+  href,
+  body,
+  text,
+  disabled,
+}: AnalyzeButtonProps) => {
+  const { askGemini, geminiIsLoading } = useGeminiChat();
 
   const handleInsertAnalyze = async () => {
     const gemini = JSON.parse(
@@ -34,35 +41,36 @@ const AnalyzeButton = ({ children, href, body, text }: AnalyzeButtonProps) => {
     const response = await fetch(`/api/analyze`, {
       method: "POST",
       body: JSON.stringify(analyze),
-    }).finally(() => {
-      return (location.href = href);
     });
+
     if (!response.ok) {
       throw new Error("문제가 발생했습니다.");
     }
+    return (location.href = href);
   };
 
   // TODO: 공통 모듈로 합체
   const handleButtonClick = async () => {
-    try {
-      const response = await fetch(`/api${href}`, body);
-      if (!response.ok) {
-        throw new Error("문제가 발생했습니다.");
-      }
-    } finally {
-      handleInsertAnalyze();
+    const response = await fetch(`/api${href}`, body);
+
+    if (!response.ok) {
+      throw new Error("문제가 발생했습니다.");
     }
+
+    await handleInsertAnalyze();
   };
 
   return (
-    <button
-      onClick={() => handleButtonClick()}
-      className={
-        "h-fit mb-4 p-2 text-regular-12 text-white bg-secondary animate-pulse w-full flex items-center justify-center rounded-xl"
-      }
-    >
-      {children}
-    </button>
+    <>
+      <Loading text="대화 분석 중..." isLoading={geminiIsLoading} />
+      <button
+        disabled={disabled}
+        onClick={() => handleButtonClick()}
+        className={`h-fit mb-2 p-2 text-regular-12 text-white bg-secondary animate-pulse w-full flex items-center justify-center rounded-xl`}
+      >
+        {children}
+      </button>
+    </>
   );
 };
 

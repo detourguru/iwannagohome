@@ -3,6 +3,7 @@
 import AnalyzeButton from "@/components/Button/AnalyzeButton";
 import ChatCard from "@/components/Card/ChatCard";
 import InputBar from "@/components/Input/InputBar";
+import Loading from "@/components/Loading/Loading";
 import useAutoScroll from "@/hooks/useAutoScroll";
 import useFetchStoryData from "@/hooks/useFetchStoryData";
 import useHandleChatEvent from "@/hooks/useHandleChatEvent";
@@ -13,6 +14,7 @@ import { v4 } from "uuid";
 
 export default function SceneDetail() {
   const [text, setText] = useState("");
+  const [count, setCount] = useState(0);
   const path = usePathname();
   const chatId = v4();
 
@@ -20,8 +22,14 @@ export default function SceneDetail() {
     path: path,
   });
 
-  const { chat, history, setChat, handleOnClick, handleSubmit } =
-    useHandleChatEvent(baseStory, isLoading);
+  const {
+    chat,
+    history,
+    setChat,
+    handleOnClick,
+    handleSubmit,
+    geminiIsLoading,
+  } = useHandleChatEvent(baseStory, isLoading);
 
   const { bottomRef } = useAutoScroll(history);
 
@@ -29,6 +37,10 @@ export default function SceneDetail() {
   const turnLength = noScriptHistory.filter(
     (history) => history.role === "user"
   ).length;
+
+  if (noScriptHistory[noScriptHistory.length - 1]?.role === "user") {
+    noScriptHistory.push({ role: "model", parts: [{ text: "loading" }] });
+  }
 
   const body = {
     method: "POST",
@@ -68,12 +80,17 @@ export default function SceneDetail() {
           }
         }`);
     }
+
+    setCount(
+      noScriptHistory.filter((history) => history.role === "user").length
+    );
   }, [baseStory, noScriptHistory]);
 
   return (
     baseStory && (
       <div className="flex flex-col gap-5 h-full">
-        <div className="flex flex-col gap-3 flex-1 overflow-y-auto no-scrollbar">
+        <Loading isLoading={isLoading} />
+        <div className="flex flex-col gap-3 flex-1 -mb-2 overflow-y-auto no-scrollbar">
           <header className="flex flex-col gap-5 text-center">
             <Image
               className="w-full object-cover max-h-48 rounded-lg"
@@ -101,11 +118,22 @@ export default function SceneDetail() {
             ))}
           </section>
           <div ref={bottomRef} />
+          <div className="flex flex-col gap-2 text-center text-regular-14 opacity-40">
+            <span className="">현재 대화 {count}턴 / 최대 15턴</span>
+            <span className="text-gray-500">
+              5턴 이후부터 분석을 요청할 수 있어요.
+            </span>
+          </div>
         </div>
         <footer className="flex flex-col items-center">
           {turnLength >= 5 && (
             <div className="h-fit cursor-pointer">
-              <AnalyzeButton href={`/result/${chatId}`} body={body} text={text}>
+              <AnalyzeButton
+                disabled={geminiIsLoading}
+                href={`/result/${chatId}`}
+                body={body}
+                text={text}
+              >
                 분석하기
               </AnalyzeButton>
             </div>
