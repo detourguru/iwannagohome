@@ -17,11 +17,24 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({ message: "ok", status: 200, data });
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   const req = await request.json();
-  const { error } = await supabase.from("chat").insert(req);
+  const { error, status } = await supabase.from("chat").insert(req);
 
   if (error) {
+    // error report
+    await fetch(process.env.NEXT_PUBLIC_HOST_NAME + "/api/http", {
+      method: "POST",
+      body: JSON.stringify({
+        method: request.method,
+        url: request.url,
+        request_body: req,
+        response_body: {
+          error: error.message,
+        },
+        status_code: status,
+      }),
+    });
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
