@@ -2,6 +2,7 @@
 
 import useGeminiChat from "@/hooks/useGeminiChat";
 import Loading from "../Loading/Loading";
+import fetchData from "@/utils/fetchData";
 
 export interface AnalyzeButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -26,36 +27,68 @@ const AnalyzeButton = ({
     const gemini = JSON.parse(
       (await askGemini(text)).replaceAll("```", "").replaceAll("json", "")
     );
+    try {
+      const keysToCheck = ["summary", "result", "advise"];
+      const allKeysExist = keysToCheck.every((key) => key in gemini);
 
-    const analyze = {
-      chat_id: JSON.parse(body.body).chat_id,
-      summary: gemini.summary,
-      result: {
-        title: gemini.result.status,
-        emoji: gemini.result.emoji,
-        context: gemini.result.context,
-      },
-      advise: gemini.advise,
-    };
+      if (!allKeysExist) {
+        // TODO: 재시도 할 수 있는 방법 고민
+        throw Error("gemini 응답 생성 이슈");
+      }
 
-    const response = await fetch(`/api/analyze`, {
-      method: "POST",
-      body: JSON.stringify(analyze),
-    });
+      const analyze = {
+        chat_id: JSON.parse(body.body).chat_id,
+        summary: gemini.summary,
+        result: {
+          title: gemini.result.status,
+          emoji: gemini.result.emoji,
+          context: gemini.result.context,
+        },
+        advise: gemini.advise,
+      };
 
-    if (!response.ok) {
-      throw new Error("문제가 발생했습니다.");
+      await fetchData({
+        path: "/api/analyze",
+        body: {
+          method: "POST",
+          body: JSON.stringify(analyze),
+        },
+      });
+
+      return (location.href = href);
+    } catch (error) {
+      let message;
+      if (error instanceof Error) message = error.message;
+
+      // error report
+      await fetchData({
+        path: "/api/http",
+        body: {
+          method: "POST",
+          body: JSON.stringify({
+            method: "POST",
+            url: "AnalyzeButton",
+            request_body: {
+              body: JSON.stringify(gemini),
+            },
+            response_body: {
+              error: message,
+            },
+            status_code: 500,
+          }),
+        },
+      });
+
+      alert("죄송합니다. 에러가 발생했습니다.\n다시 시도해주세요.");
+      return (location.href = process.env.NEXT_PUBLIC_HOST_NAME!);
     }
-    return (location.href = href);
   };
 
-  // TODO: 공통 모듈로 합체
   const handleButtonClick = async () => {
-    const response = await fetch(`/api${href}`, body);
-
-    if (!response.ok) {
-      throw new Error("문제가 발생했습니다.");
-    }
+    await fetchData({
+      path: `/api${href}`,
+      body: body,
+    });
 
     await handleInsertAnalyze();
   };

@@ -2,12 +2,12 @@
 
 import SceneCard from "@/components/Card/SceneCard";
 import Loading from "@/components/Loading/Loading";
-import useFetchStoryData from "@/hooks/useFetchStoryData";
+import useFetchData from "@/hooks/useFetchData";
 import { usePathname } from "next/navigation";
 
 export default function Scene() {
   const path = usePathname();
-  const { data: baseStory, isLoading } = useFetchStoryData({
+  const { data: baseStory, isLoading } = useFetchData({
     path: path,
   });
 

@@ -6,7 +6,7 @@ import ChatCard from "@/components/Card/ChatCard";
 import InputBar from "@/components/Input/InputBar";
 import Loading from "@/components/Loading/Loading";
 import useAutoScroll from "@/hooks/useAutoScroll";
-import useFetchStoryData from "@/hooks/useFetchStoryData";
+import useFetchData from "@/hooks/useFetchData";
 import useHandleChatEvent from "@/hooks/useHandleChatEvent";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -19,7 +19,7 @@ export default function SceneDetail() {
   const path = usePathname();
   const chatId = v4();
 
-  const { data: baseStory, isLoading } = useFetchStoryData({
+  const { data: baseStory, isLoading } = useFetchData({
     path: path,
   });
 

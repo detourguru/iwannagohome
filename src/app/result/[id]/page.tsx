@@ -3,12 +3,12 @@
 import TextAccordion from "@/components/Accodion/TextAccodion";
 import Button from "@/components/Button/Button";
 import Loading from "@/components/Loading/Loading";
-import useFetchChatData from "@/hooks/useFetchChatData";
+import useFetchData from "@/hooks/useFetchData";
 import { usePathname } from "next/navigation";
 
 export default function Result() {
   const current = usePathname();
-  const { data, isLoading } = useFetchChatData({ path: current });
+  const { data, isLoading } = useFetchData({ path: current });
   return (
     data && (
       <div className="w-full h-full flex flex-col text-center gap-5 break-keep">
