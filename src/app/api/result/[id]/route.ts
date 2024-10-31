@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/utils/supabaseClient";
+import useErrorReport from "@/hooks/useErrorReport";
 
 export async function GET(request: NextRequest) {
   const { pathname } = new URL(request.url);
@@ -22,19 +23,7 @@ export async function POST(request: Request) {
   const { error, status } = await supabase.from("chat").insert(req);
 
   if (error) {
-    // error report
-    await fetch(process.env.NEXT_PUBLIC_HOST_NAME + "/api/http", {
-      method: "POST",
-      body: JSON.stringify({
-        method: request.method,
-        url: request.url,
-        request_body: req,
-        response_body: {
-          error: error.message,
-        },
-        status_code: status,
-      }),
-    });
+    useErrorReport(request, error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
