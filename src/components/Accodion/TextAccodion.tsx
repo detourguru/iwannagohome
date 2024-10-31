@@ -54,19 +54,19 @@ const TextAccordion = ({ type, data }: TextAccordionProps) => {
           <ul className="text-regular-14 flex flex-col gap-4">
             <div className="flex flex-col gap-2">
               <li className="text-bold-16">👀 현재 상황</li>
-              <dl className="whitespace-pre-line">
+              <dl className="whitespace-pre-line break-keep">
                 {JSON.parse(data.chat_analyze.advise).current}
               </dl>
             </div>
             <div className="flex flex-col gap-2">
               <li className="text-bold-16">🧑‍🔧 해결 방법</li>
-              <dl className="whitespace-pre-line">
+              <dl className="whitespace-pre-line break-keep">
                 {JSON.parse(data.chat_analyze.advise).solution}
               </dl>
             </div>
             <div className="flex flex-col gap-2">
               <li className="text-bold-16">🤔 주의 사항</li>
-              <dl className="whitespace-pre-line">
+              <dl className="whitespace-pre-line break-keep">
                 {JSON.parse(data.chat_analyze.advise).caution}
               </dl>
             </div>

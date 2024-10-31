@@ -104,7 +104,9 @@ export default function SceneDetail() {
               <span className="text-bold-14">
                 {baseStory[0].story_info.title}
               </span>
-              <span className="text-regular-14">{baseStory[0].story}</span>
+              <span className="text-regular-14 break-keep">
+                {baseStory[0].story}
+              </span>
             </div>
             <hr className="h-0.5 border-t-0 bg-gray-100"></hr>
           </header>

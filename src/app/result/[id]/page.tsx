@@ -11,7 +11,7 @@ export default function Result() {
   const { data, isLoading } = useFetchChatData({ path: current });
   return (
     data && (
-      <div className="w-full h-full flex flex-col text-center gap-5">
+      <div className="w-full h-full flex flex-col text-center gap-5 break-keep">
         <Loading isLoading={isLoading} />
         <div className="h-full overflow-auto flex flex-col gap-5">
           <header className="flex flex-col gap-3">

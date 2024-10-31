@@ -25,7 +25,7 @@ const InputBar = ({
     <div className="w-full flex flex-row gap-2">
       <input
         readOnly={turnLength >= 15 ? true : false}
-        className="w-11/12 text-regular-14 placeholder:text-gray-400 border border-gray-100 rounded-md p-2 focus:outline-none focus:border-slate-400"
+        className="w-11/12 text-regular-16 placeholder:text-gray-400 border border-gray-100 rounded-md p-2 focus:outline-none focus:border-slate-400"
         placeholder={
           turnLength >= 15
             ? "더 이상 입력할 수 없습니다."
