@@ -1,10 +1,14 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 프로젝트 설명
+AI 연인이 삐진 이유를 15턴 안에 찾아내는 채팅식 게임 웹앱 서비스입니다.
 
-Idea from: https://holiday-jansori.vercel.app/
+원하는 상황을 선택 후 채팅 -> 분석하기로 대화와 AI연인의 감정을 분석할 수 있습니다.
 
-## Getting Started
+아이디어/디자인 참고: [명절 잔소리 마스터](https://holiday-jansori.vercel.app/)
 
-First, run the development server:
+## 배포 링크
+https://iwgh.vercel.app/
+
+## 시작하기
 
 ```bash
 npm run dev
@@ -16,23 +20,14 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 미리보기
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+https://github.com/user-attachments/assets/5e207cfc-2361-48f4-9aa6-f45adfe72866
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 프로젝트 상세
+[https://simplistic-fowl-e8b.notion.site/124c24368b5380dd80ceff55e28cb067](https://simplistic-fowl-e8b.notion.site/129c24368b5380339c10ebe280d3a34b)
