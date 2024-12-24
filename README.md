@@ -7,23 +7,6 @@
 [<img src="https://img.shields.io/badge/프로젝트 기간-2024.10.25~2024.11.1-fab2ac?style=flat&logo=&logoColor=white" />]()
 </div> 
 
-## 배포 링크
-https://iwgh.vercel.app/
-
-
-## 시작하기
-```bash
-npm run dev
-```
-
-
-## 미리보기
-https://github.com/user-attachments/assets/5e207cfc-2361-48f4-9aa6-f45adfe72866
-
-
-## 프로젝트 상세
-[https://simplistic-fowl-e8b.notion.site/124c24368b5380dd80ceff55e28cb067](https://simplistic-fowl-e8b.notion.site/129c24368b5380339c10ebe280d3a34b)
-
 
 ## 📝 소개
 AI 연인이 삐진 이유를 15턴 안에 찾아내는 채팅식 게임 웹앱 서비스입니다. 
@@ -70,6 +53,12 @@ AI 연인이 삐진 이유를 15턴 안에 찾아내는 채팅식 게임 웹앱 
   - 채팅이 추가되어도 자동으로 스크롤이 내려가지 않는 이슈를 확인 해 사용자 경험 개선을 위하여 항상 스크롤이 아래로 가도록 하는 커스텀 훅을 구현해 적용했습니다. 그러나 사용자가 이전 채팅 내용 확인을 위해 스크롤을 다시 올리더라도 자동으로 스크롤이 아래로 내려가는 이슈가 있었습니다. 그래서 chat history를 array로 받아 채팅에 새로운 요소가 추가될 때 자동스크롤을 구현하도록 수정되었습니다.
   - [작업 커밋](https://github.com/detourguru/iwannagohome/commit/b95670c28b4c7d4029ca4938d1c95231019fd66f)
 <br />
+
+
+## 시작하기
+```bash
+npm run dev
+```
 
 
 ## 💁‍♂️ 프로젝트 팀원
