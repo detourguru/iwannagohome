@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
 
   const generator = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
   const model = generator.getGenerativeModel({
-    model: "gemini-1.5-pro",
+    model: "gemini-2.5-flash",
     safetySettings: [
       {
         category: HarmCategory.HARM_CATEGORY_HARASSMENT,
@@ -23,6 +23,12 @@ export async function POST(request: NextRequest) {
     ],
   });
 
-  const result = await model.generateContent(script);
-  return NextResponse.json({ response: result.response.text() });
+  try {
+    const result = await model.generateContent(script);
+    return NextResponse.json({ response: result.response.text() });
+  } catch (e) {
+    console.error(e);
+    const message = e instanceof Error ? e.message : "Unknown error";
+    return NextResponse.json({ error: message }, { status: 502 });
+  }
 }

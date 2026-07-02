@@ -25,14 +25,19 @@ export async function POST(request: NextRequest) {
     },
   ];
   const model = generator.getGenerativeModel({
-    model: "gemini-1.5-pro",
+    model: "gemini-2.5-flash",
     safetySettings: safetySettings,
   });
   const chat = model.startChat({
     history: chatHistory,
   });
 
-  const result = await chat.sendMessage(newChat);
-
-  return NextResponse.json({ response: result.response.text() });
+  try {
+    const result = await chat.sendMessage(newChat);
+    return NextResponse.json({ response: result.response.text() });
+  } catch (e) {
+    console.error(e);
+    const message = e instanceof Error ? e.message : "Unknown error";
+    return NextResponse.json({ error: message }, { status: 502 });
+  }
 }
