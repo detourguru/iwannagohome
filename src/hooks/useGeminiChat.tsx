@@ -1,11 +1,7 @@
 "use client";
 
 import { GeminiChatHistoryType } from "@/type/common";
-import {
-  GoogleGenerativeAI,
-  HarmBlockThreshold,
-  HarmCategory,
-} from "@google/generative-ai";
+import fetchData from "@/utils/fetchData";
 import { useState } from "react";
 
 interface useGeminiProps {
@@ -17,65 +13,33 @@ export default function useGeminiChat() {
   const [geminiIsLoading, setGeminiIsLoading] = useState(false);
   const askGeminiBot = async ({ chatHistory, newChat }: useGeminiProps) => {
     setGeminiIsLoading(true);
-    const generator = new GoogleGenerativeAI(
-      process.env.NEXT_PUBLIC_GEMINI_API_KEY!
-    );
-    const safetySettings = [
-      {
-        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-        threshold: HarmBlockThreshold.BLOCK_NONE,
+
+    const res = await fetchData({
+      path: "/api/gemini/chat",
+      body: {
+        method: "POST",
+        body: JSON.stringify({ chatHistory, newChat }),
       },
-      {
-        category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-        threshold: HarmBlockThreshold.BLOCK_NONE,
-      },
-    ];
-    const model = generator.getGenerativeModel({
-      model: "gemini-1.5-pro",
-      safetySettings: safetySettings,
-    });
-    const chat = model.startChat({
-      history: chatHistory,
     });
 
-    const result = await chat
-      .sendMessage(newChat)
-      .finally(() => setGeminiIsLoading(false));
+    setGeminiIsLoading(false);
 
-    const response = result.response.text();
-
-    return response;
+    return res.response;
   };
 
   const askGemini = async (script: string) => {
     setGeminiIsLoading(true);
 
-    const generator = new GoogleGenerativeAI(
-      process.env.NEXT_PUBLIC_GEMINI_API_KEY!
-    );
-    const safetySettings = [
-      {
-        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-        threshold: HarmBlockThreshold.BLOCK_NONE,
+    const res = await fetchData({
+      path: "/api/gemini",
+      body: {
+        method: "POST",
+        body: JSON.stringify({ script }),
       },
-      {
-        category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-        threshold: HarmBlockThreshold.BLOCK_NONE,
-      },
-    ];
-    const model = generator.getGenerativeModel({
-      model: "gemini-1.5-pro",
-      safetySettings: safetySettings,
     });
-    const prompt = script;
 
-    const result = await model
-      .generateContent(prompt)
-      .finally(() => setGeminiIsLoading(false));
-
-    const response = result.response.text();
-
-    return response;
+    setGeminiIsLoading(false);
+    return res.response;
   };
 
   return { askGeminiBot, askGemini, geminiIsLoading };
