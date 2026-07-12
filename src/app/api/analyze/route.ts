@@ -4,10 +4,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   const req = await request.json();
-  const { error } = await supabase.from("chat_analyze").insert(req);
+  const { error, status } = await supabase.from("chat_analyze").insert(req);
 
   if (error) {
-    await errorReport(request, error);
+    await errorReport(request, error, status);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 

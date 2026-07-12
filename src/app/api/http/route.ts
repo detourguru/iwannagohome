@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   const req = await request.json();
 
-  const { error, data } = await supabase.rpc("log_http_request", {
+  const { error, data, status } = await supabase.rpc("log_http_request", {
     p_method: req.method,
     p_url: req.url,
     p_request_body: req.request_body,
@@ -14,7 +14,7 @@ export async function POST(request: Request) {
   });
 
   if (error) {
-    errorReport(request, error);
+    errorReport(request, error, status);
     return NextResponse.json({ message: error.message, status: 500, data });
   }
 

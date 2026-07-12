@@ -23,7 +23,7 @@ export async function POST(request: Request) {
   const { error, status } = await supabase.from("chat").insert(req);
 
   if (error) {
-    await errorReport(request, error);
+    await errorReport(request, error, status);
     return NextResponse.json({ error: error.message }, { status: status });
   }
 
