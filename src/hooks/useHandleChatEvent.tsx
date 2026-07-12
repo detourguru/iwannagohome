@@ -7,7 +7,7 @@ import useGeminiChat from "@/hooks/useGeminiChat";
 
 export default function usehandleAddChatEvent(
   baseStory: BaseStoryType[] | null,
-  isLoading: boolean
+  isLoading: boolean,
 ) {
   const [chat, setChat] = useState("");
   const [history, setHistory] = useState<GeminiChatHistoryType[] | []>([]);
@@ -60,11 +60,23 @@ export default function usehandleAddChatEvent(
   };
 
   const handleAddAnswer = async () => {
-    const data = await askGeminiBot({
-      chatHistory: history,
-      newChat: chat,
-    });
-    setHistory((prev) => [...prev, { role: "model", parts: [{ text: data }] }]);
+    try {
+      const data = await askGeminiBot({
+        chatHistory: history,
+        newChat: chat,
+      });
+      setHistory((prev) => [
+        ...prev,
+        { role: "model", parts: [{ text: data }] },
+      ]);
+    } catch (error) {
+      const errorMsg =
+        error instanceof Error ? error.message : "알 수 없는 에러";
+      setHistory((prev) => [
+        ...prev,
+        { role: "model", parts: [{ text: `에러 발생: ${errorMsg}` }] },
+      ]);
+    }
   };
   const handleSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
     handleGeminiLoading();

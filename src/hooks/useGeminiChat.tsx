@@ -14,17 +14,21 @@ export default function useGeminiChat() {
   const askGeminiBot = async ({ chatHistory, newChat }: useGeminiProps) => {
     setGeminiIsLoading(true);
 
-    const res = await fetchData({
-      path: "/api/gemini/chat",
-      body: {
-        method: "POST",
-        body: JSON.stringify({ chatHistory, newChat }),
-      },
-    });
+    try {
+      const res = await fetchData({
+        path: "/api/gemini/chat",
+        body: {
+          method: "POST",
+          body: JSON.stringify({ chatHistory, newChat }),
+        },
+      });
 
-    setGeminiIsLoading(false);
+      setGeminiIsLoading(false);
 
-    return res.response;
+      return res.response;
+    } finally {
+      setGeminiIsLoading(false);
+    }
   };
 
   const askGemini = async (script: string) => {
