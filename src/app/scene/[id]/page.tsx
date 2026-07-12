@@ -33,6 +33,8 @@ export default function SceneDetail() {
     handleOnClick,
     handleSubmit,
     geminiIsLoading,
+    error,
+    handleRetry,
   } = useHandleChatEvent(baseStory, isLoading);
 
   const { bottomRef } = useAutoScroll(history);
@@ -68,7 +70,7 @@ export default function SceneDetail() {
   if (!baseStory) return status;
 
   return (
-    <div className="flex flex-col gap-5 h-full">
+    <div className="w-full flex flex-col gap-5 h-full">
       <div className="flex flex-col gap-3 flex-1 -mb-2 overflow-y-auto no-scrollbar">
         <header className="flex flex-col gap-5 text-center">
           <Image
@@ -106,7 +108,7 @@ export default function SceneDetail() {
           </span>
         </div>
       </div>
-      <footer className="flex flex-col items-center">
+      <footer className="w-full flex flex-col items-center">
         {turnLength >= 5 && (
           <div className="h-fit cursor-pointer">
             <AnalyzeButton
@@ -117,6 +119,18 @@ export default function SceneDetail() {
             >
               분석하기
             </AnalyzeButton>
+          </div>
+        )}
+        {error && (
+          <div className="w-full flex items-center justify-between gap-2 bg-red-50 text-red-500 text-regular-14 rounded-md px-3 py-2">
+            <span className="min-w-0 line-clamp-3">⚠️ {error}</span>
+            <button
+              type="button"
+              onClick={handleRetry}
+              className="shrink-0 text-bold-14 underline"
+            >
+              재시도
+            </button>
           </div>
         )}
         <InputBar

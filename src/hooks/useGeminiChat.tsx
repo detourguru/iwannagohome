@@ -23,8 +23,6 @@ export default function useGeminiChat() {
         },
       });
 
-      setGeminiIsLoading(false);
-
       return res.response;
     } finally {
       setGeminiIsLoading(false);

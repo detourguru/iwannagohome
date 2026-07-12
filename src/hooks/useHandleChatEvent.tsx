@@ -4,6 +4,8 @@
 import { BaseStoryType, GeminiChatHistoryType } from "@/type/common";
 import { KeyboardEvent, useEffect, useState } from "react";
 import useGeminiChat from "@/hooks/useGeminiChat";
+import getErrorCode from "@/utils/getErrorCode";
+import { ERROR_MESSAGE } from "@/app/constants/errors";
 
 export default function usehandleAddChatEvent(
   baseStory: BaseStoryType[] | null,
@@ -11,6 +13,8 @@ export default function usehandleAddChatEvent(
 ) {
   const [chat, setChat] = useState("");
   const [history, setHistory] = useState<GeminiChatHistoryType[] | []>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [failedChat, setFailedChat] = useState<string | null>(null);
 
   const { askGeminiBot, geminiIsLoading } = useGeminiChat();
 
@@ -33,58 +37,54 @@ export default function usehandleAddChatEvent(
     createInitHistory();
   }, [isLoading, baseStory, history]);
 
-  const handleGeminiLoading = () => {
-    if (geminiIsLoading) {
-      return;
-    }
-  };
-
   const handleAddChat = (chat: string, role: string) => {
-    setHistory([
-      ...history,
-      {
-        role: role,
-        parts: [{ text: chat }],
-      },
-    ]);
+    setHistory((prev) => [...prev, { role, parts: [{ text: chat }] }]);
   };
 
-  const handleOnClick = (text: string) => {
-    handleGeminiLoading();
-
-    if (text.length > 0) {
-      handleAddChat(text, "user");
-      setChat("");
-      handleAddAnswer();
-    }
-  };
-
-  const handleAddAnswer = async () => {
+  const handleAddAnswer = async (text: string) => {
     try {
       const data = await askGeminiBot({
         chatHistory: history,
-        newChat: chat,
+        newChat: text,
       });
       setHistory((prev) => [
         ...prev,
         { role: "model", parts: [{ text: data }] },
       ]);
-    } catch (error) {
-      const errorMsg =
-        error instanceof Error ? error.message : "알 수 없는 에러";
-      setHistory((prev) => [
-        ...prev,
-        { role: "model", parts: [{ text: `에러 발생: ${errorMsg}` }] },
-      ]);
+      setError(null);
+      setFailedChat(null);
+    } catch (e) {
+      console.error(e);
+      setHistory((prev) => prev.slice(0, -1)); // 턴 원복
+      setFailedChat(text);
+      setError(ERROR_MESSAGE[getErrorCode(e as Error)]);
     }
   };
+
+  const sendChat = (text: string) => {
+    if (geminiIsLoading || text.length === 0) return;
+    handleAddChat(text, "user");
+    setChat("");
+    handleAddAnswer(text);
+  };
+
+  const handleOnClick = (text: string) => {
+    sendChat(text);
+  };
+
   const handleSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
-    handleGeminiLoading();
-    if (e.currentTarget.value !== "" && e.key === "Enter") {
-      handleAddChat(e.currentTarget.value, "user");
-      setChat("");
-      handleAddAnswer();
+    if (e.key === "Enter") {
+      sendChat(e.currentTarget.value);
     }
+  };
+
+  const handleRetry = () => {
+    if (!failedChat) return;
+    const text = failedChat;
+    setError(null);
+    setFailedChat(null);
+    handleAddChat(text, "user");
+    handleAddAnswer(text);
   };
 
   return {
@@ -94,5 +94,7 @@ export default function usehandleAddChatEvent(
     history,
     setChat,
     geminiIsLoading,
+    error,
+    handleRetry,
   };
 }
