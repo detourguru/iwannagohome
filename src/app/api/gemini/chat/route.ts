@@ -1,15 +1,9 @@
-import { GeminiChatHistoryType } from "@/type/common";
 import {
   GoogleGenerativeAI,
   HarmCategory,
   HarmBlockThreshold,
 } from "@google/generative-ai";
 import { NextRequest, NextResponse } from "next/server";
-
-interface useGeminiProps {
-  chatHistory: GeminiChatHistoryType[];
-  newChat: string;
-}
 
 export async function POST(request: NextRequest) {
   const { chatHistory, newChat } = await request.json();
