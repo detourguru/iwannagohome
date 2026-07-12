@@ -1,6 +1,7 @@
 "use client";
 
-import { NextResponse } from "next/server";
+import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
+import Loading from "@/components/Loading/Loading";
 import { useEffect, useState } from "react";
 
 interface FetchDataProps {
@@ -8,6 +9,7 @@ interface FetchDataProps {
   body?: any;
 }
 export default function useFetchData({ path, body }: FetchDataProps) {
+  const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<any[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -15,13 +17,13 @@ export default function useFetchData({ path, body }: FetchDataProps) {
       try {
         const response = await fetch(`/api${path}`, body);
         if (!response.ok) {
-          return NextResponse.json(
-            { error: await response.text() },
-            { status: 500 }
-          );
+          setError(await response.text());
+          return;
         }
         const result = await response.json();
         setData(result.data);
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "알 수 없는 에러");
       } finally {
         setIsLoading(false);
       }
@@ -30,5 +32,11 @@ export default function useFetchData({ path, body }: FetchDataProps) {
     fetching();
   }, [path, body]);
 
-  return { data, isLoading };
+  const status = error ? (
+    <ErrorMessage message={error} />
+  ) : (
+    <Loading isLoading={isLoading} />
+  );
+
+  return { data, isLoading, error, status };
 }

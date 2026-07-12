@@ -4,7 +4,6 @@ import { RESULT_SCRIPT } from "@/app/constants/script";
 import AnalyzeButton from "@/components/Button/AnalyzeButton";
 import ChatCard from "@/components/Card/ChatCard";
 import InputBar from "@/components/Input/InputBar";
-import Loading from "@/components/Loading/Loading";
 import useAutoScroll from "@/hooks/useAutoScroll";
 import useFetchData from "@/hooks/useFetchData";
 import useHandleChatEvent from "@/hooks/useHandleChatEvent";
@@ -19,7 +18,11 @@ export default function SceneDetail() {
   const path = usePathname();
   const chatId = v4();
 
-  const { data: baseStory, isLoading } = useFetchData({
+  const {
+    data: baseStory,
+    isLoading,
+    status,
+  } = useFetchData({
     path: path,
   });
 
@@ -36,7 +39,7 @@ export default function SceneDetail() {
 
   const noScriptHistory = history.slice(1);
   const turnLength = noScriptHistory.filter(
-    (history) => history.role === "user"
+    (history) => history.role === "user",
   ).length;
 
   if (noScriptHistory[noScriptHistory.length - 1]?.role === "user") {
@@ -58,74 +61,73 @@ export default function SceneDetail() {
     }
 
     setCount(
-      noScriptHistory.filter((history) => history.role === "user").length
+      noScriptHistory.filter((history) => history.role === "user").length,
     );
   }, [baseStory, noScriptHistory]);
 
+  if (!baseStory) return status;
+
   return (
-    baseStory && (
-      <div className="flex flex-col gap-5 h-full">
-        <Loading isLoading={isLoading} />
-        <div className="flex flex-col gap-3 flex-1 -mb-2 overflow-y-auto no-scrollbar">
-          <header className="flex flex-col gap-5 text-center">
-            <Image
-              className="w-full object-cover max-h-48 rounded-lg"
-              alt={baseStory[0].story_info.alt}
-              src={baseStory[0].story_info.image_src}
-              width={0}
-              height={0}
-              sizes="100vw"
-            />
-            <div className="flex flex-col gap-1">
-              <span className="text-bold-14">
-                {baseStory[0].story_info.title}
-              </span>
-              <span className="text-regular-14 break-keep">
-                {baseStory[0].story}
-              </span>
-            </div>
-            <hr className="h-0.5 border-t-0 bg-gray-100"></hr>
-          </header>
-          <section className="py-2">
-            {noScriptHistory.map((item, index) => (
-              <ChatCard
-                key={index}
-                chat={item}
-                target={baseStory[0].story_info.character}
-              />
-            ))}
-          </section>
-          <div ref={bottomRef} />
-          <div className="flex flex-col gap-2 text-center text-regular-14 opacity-40">
-            <span className="">현재 대화 {count}턴 / 최대 15턴</span>
-            <span className="text-gray-500">
-              5턴 이후부터 분석을 요청할 수 있어요.
+    <div className="flex flex-col gap-5 h-full">
+      <div className="flex flex-col gap-3 flex-1 -mb-2 overflow-y-auto no-scrollbar">
+        <header className="flex flex-col gap-5 text-center">
+          <Image
+            className="w-full object-cover max-h-48 rounded-lg"
+            alt={baseStory[0].story_info.alt}
+            src={baseStory[0].story_info.image_src}
+            width={0}
+            height={0}
+            sizes="100vw"
+          />
+          <div className="flex flex-col gap-1">
+            <span className="text-bold-14">
+              {baseStory[0].story_info.title}
+            </span>
+            <span className="text-regular-14 break-keep">
+              {baseStory[0].story}
             </span>
           </div>
+          <hr className="h-0.5 border-t-0 bg-gray-100"></hr>
+        </header>
+        <section className="py-2">
+          {noScriptHistory.map((item, index) => (
+            <ChatCard
+              key={index}
+              chat={item}
+              target={baseStory[0].story_info.character}
+            />
+          ))}
+        </section>
+        <div ref={bottomRef} />
+        <div className="flex flex-col gap-2 text-center text-regular-14 opacity-40">
+          <span className="">현재 대화 {count}턴 / 최대 15턴</span>
+          <span className="text-gray-500">
+            5턴 이후부터 분석을 요청할 수 있어요.
+          </span>
         </div>
-        <footer className="flex flex-col items-center">
-          {turnLength >= 5 && (
-            <div className="h-fit cursor-pointer">
-              <AnalyzeButton
-                disabled={geminiIsLoading}
-                href={`/result/${chatId}`}
-                body={body}
-                text={text}
-              >
-                분석하기
-              </AnalyzeButton>
-            </div>
-          )}
-          <InputBar
-            story={baseStory[0]}
-            onClick={handleOnClick}
-            onSubmit={handleSubmit}
-            chat={chat}
-            setChat={setChat}
-            turnLength={turnLength}
-          />
-        </footer>
       </div>
-    )
+      <footer className="flex flex-col items-center">
+        {turnLength >= 5 && (
+          <div className="h-fit cursor-pointer">
+            <AnalyzeButton
+              disabled={geminiIsLoading}
+              href={`/result/${chatId}`}
+              body={body}
+              text={text}
+            >
+              분석하기
+            </AnalyzeButton>
+          </div>
+        )}
+        <InputBar
+          story={baseStory[0]}
+          onClick={handleOnClick}
+          onSubmit={handleSubmit}
+          chat={chat}
+          setChat={setChat}
+          turnLength={turnLength}
+        />
+      </footer>
+    </div>
   );
 }
