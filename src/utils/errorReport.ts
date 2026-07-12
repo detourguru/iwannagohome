@@ -4,14 +4,14 @@ export default async function errorReport(
   request: Request,
   error: PostgrestError | null,
   status: number,
+  reqBody: unknown,
 ) {
-  const req = await request.json();
   await fetch(process.env.NEXT_PUBLIC_HOST_NAME + "/api/http", {
     method: "POST",
     body: JSON.stringify({
       method: request.method,
       url: request.url,
-      request_body: req,
+      request_body: reqBody,
       response_body: {
         error: error ? error.message : "알 수 없는 에러 발생",
       },
