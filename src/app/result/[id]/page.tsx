@@ -3,11 +3,12 @@
 import TextAccordion from "@/components/Accodion/TextAccodion";
 import Button from "@/components/Button/Button";
 import useFetchData from "@/hooks/useFetchData";
+import { ChatType } from "@/type/common";
 import { usePathname } from "next/navigation";
 
 export default function Result() {
   const current = usePathname();
-  const { data, status } = useFetchData({ path: current });
+  const { data, status } = useFetchData<ChatType[]>({ path: current });
 
   if (!data) return status;
 

@@ -7,6 +7,7 @@ import InputBar from "@/components/Input/InputBar";
 import useAutoScroll from "@/hooks/useAutoScroll";
 import useFetchData from "@/hooks/useFetchData";
 import useChatSession from "@/hooks/useHandleChatEvent";
+import { BaseStoryType } from "@/type/common";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -22,7 +23,7 @@ export default function SceneDetail() {
     data: baseStory,
     isLoading,
     status,
-  } = useFetchData({
+  } = useFetchData<BaseStoryType[]>({
     path: path,
   });
 

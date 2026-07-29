@@ -4,7 +4,7 @@ import Button from "@/components/Button/Button";
 import useFetchData from "@/hooks/useFetchData";
 
 export default function Home() {
-  const { data: count } = useFetchData({ path: "/result" });
+  const { data: count } = useFetchData<number>({ path: "/result" });
   return (
     <section className="grid grid-cols-1 gap-5 w-full">
       <div className="grid grid-cols-1 gap-1 text-regular-20 text-center leading-9">
