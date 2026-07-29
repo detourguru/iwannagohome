@@ -123,7 +123,7 @@ export const GET_SCENE = {
         title: "사랑을 확인하려는 규빈",
         character: "규빈",
         image_src:
-          "https://oiwmlghnbtfgkyckqbic.supabase.co/storage/v1/object/sign/Image/drink-lover.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJJbWFnZS9kcmluay1sb3Zlci5wbmciLCJpYXQiOjE3Mjk5MDY1OTgsImV4cCI6MTc2MTQ0MjU5OH0.G6uNRulBe5RoCTOGQ5DRn2krpJBl850sGkYhO9KwVm8&t=2024-10-26T01%3A36%3A38.600Z",
+          "https://rkyhijtqfuhgaekkjxdc.supabase.co/storage/v1/object/sign/Image/drink-lover.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJJbWFnZS9kcmluay1sb3Zlci5wbmciLCJpYXQiOjE3Mjk5MDY1OTgsImV4cCI6MTc2MTQ0MjU5OH0.G6uNRulBe5RoCTOGQ5DRn2krpJBl850sGkYhO9KwVm8&t=2024-10-26T01%3A36%3A38.600Z",
         difficulty: "🤯🤯",
       },
     },
@@ -140,7 +140,7 @@ export const GET_SCENE = {
         title: "친구와 싸운 하진",
         character: "하진",
         image_src:
-          "https://oiwmlghnbtfgkyckqbic.supabase.co/storage/v1/object/public/Image/fight-lover.png?t=2024-10-29T13%3A35%3A59.785Z",
+          "https://rkyhijtqfuhgaekkjxdc.supabase.co/storage/v1/object/public/Image/fight-lover.png?t=2024-10-29T13%3A35%3A59.785Z",
         difficulty: "🤯🤯🤯",
       },
     },
@@ -157,7 +157,7 @@ export const GET_SCENE = {
         title: "건강 검진을 받은 시현",
         character: "시현",
         image_src:
-          "https://oiwmlghnbtfgkyckqbic.supabase.co/storage/v1/object/public/Image/empathy-lover.png",
+          "https://rkyhijtqfuhgaekkjxdc.supabase.co/storage/v1/object/public/Image/empathy-lover.png",
         difficulty: "🤯🤯🤯🤯🤯",
       },
     },
@@ -174,7 +174,7 @@ export const GET_SCENE = {
         title: "야근을 한 우연",
         character: "우연",
         image_src:
-          "https://oiwmlghnbtfgkyckqbic.supabase.co/storage/v1/object/public/Image/movie-lover.png",
+          "https://rkyhijtqfuhgaekkjxdc.supabase.co/storage/v1/object/public/Image/movie-lover.png",
         difficulty: "🤯🤯",
       },
     },
@@ -198,7 +198,7 @@ export const GET_SCENE_DETAIL = {
         title: "건강 검진을 받은 시현",
         character: "시현",
         image_src:
-          "https://oiwmlghnbtfgkyckqbic.supabase.co/storage/v1/object/public/Image/empathy-lover.png",
+          "https://rkyhijtqfuhgaekkjxdc.supabase.co/storage/v1/object/public/Image/empathy-lover.png",
         difficulty: "🤯🤯🤯🤯🤯",
       },
     },
@@ -316,7 +316,7 @@ export const GET_RESULT_DETAIL = {
           title: "친구와 싸운 하진",
           character: "하진",
           image_src:
-            "https://oiwmlghnbtfgkyckqbic.supabase.co/storage/v1/object/public/Image/fight-lover.png?t=2024-10-29T13%3A35%3A59.785Z",
+            "https://rkyhijtqfuhgaekkjxdc.supabase.co/storage/v1/object/public/Image/fight-lover.png?t=2024-10-29T13%3A35%3A59.785Z",
           difficulty: "🤯🤯🤯",
         },
         personality:
