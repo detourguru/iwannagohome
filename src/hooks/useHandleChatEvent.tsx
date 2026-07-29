@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
 import { BaseStoryType, GeminiChatHistoryType } from "@/type/common";
@@ -7,7 +6,7 @@ import useGeminiChat from "@/hooks/useGeminiChat";
 import getErrorCode from "@/utils/getErrorCode";
 import { ERROR_MESSAGE } from "@/app/constants/errors";
 
-export default function usehandleAddChatEvent(
+export default function useChatSession(
   baseStory: BaseStoryType[] | null,
   isLoading: boolean,
 ) {

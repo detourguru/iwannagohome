@@ -6,17 +6,17 @@ import ChatCard from "@/components/Card/ChatCard";
 import InputBar from "@/components/Input/InputBar";
 import useAutoScroll from "@/hooks/useAutoScroll";
 import useFetchData from "@/hooks/useFetchData";
-import useHandleChatEvent from "@/hooks/useHandleChatEvent";
+import useChatSession from "@/hooks/useHandleChatEvent";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { v4 } from "uuid";
 
 export default function SceneDetail() {
   const [text, setText] = useState("");
   const [count, setCount] = useState(0);
   const path = usePathname();
-  const chatId = v4();
+  const chatId = useMemo(() => v4(), []);
 
   const {
     data: baseStory,
@@ -35,7 +35,7 @@ export default function SceneDetail() {
     geminiIsLoading,
     error,
     handleRetry,
-  } = useHandleChatEvent(baseStory, isLoading);
+  } = useChatSession(baseStory, isLoading);
 
   const { bottomRef } = useAutoScroll(history);
 
