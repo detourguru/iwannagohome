@@ -32,16 +32,19 @@ export default function useGeminiChat() {
   const askGemini = async (script: string) => {
     setGeminiIsLoading(true);
 
-    const res = await fetchData({
-      path: "/api/gemini",
-      body: {
-        method: "POST",
-        body: JSON.stringify({ script }),
-      },
-    });
+    try {
+      const res = await fetchData({
+        path: "/api/gemini",
+        body: {
+          method: "POST",
+          body: JSON.stringify({ script }),
+        },
+      });
 
-    setGeminiIsLoading(false);
-    return res.response;
+      return res.response;
+    } finally {
+      setGeminiIsLoading(false);
+    }
   };
 
   return { askGeminiBot, askGemini, geminiIsLoading };

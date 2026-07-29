@@ -1,11 +1,11 @@
 "use client";
 
+import { useRef, useState } from "react";
 import useGeminiChat from "@/hooks/useGeminiChat";
 import Loading from "../Loading/Loading";
 import fetchData from "@/utils/fetchData";
 
-export interface AnalyzeButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface AnalyzeButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   href: string;
   body: {
     method: string;
@@ -22,12 +22,26 @@ const AnalyzeButton = ({
   disabled,
 }: AnalyzeButtonProps) => {
   const { askGemini, geminiIsLoading } = useGeminiChat();
+  const [error, setError] = useState<string | null>(null);
+  const chatSavedRef = useRef(false);
 
-  const handleInsertAnalyze = async () => {
-    const gemini = JSON.parse(
-      (await askGemini(text)).replaceAll("```", "").replaceAll("json", "")
-    );
+  const handleButtonClick = async () => {
+    let gemini: any;
+    setError(null);
     try {
+      const chatInsert = chatSavedRef.current
+        ? Promise.resolve()
+        : fetchData({ path: `/api${href}`, body: body }).then(() => {
+            chatSavedRef.current = true;
+          });
+
+      const [, geminiResponse] = await Promise.all([
+        chatInsert,
+        askGemini(text),
+      ]);
+
+      gemini = JSON.parse(geminiResponse);
+
       const keysToCheck = ["summary", "result", "advise"];
       const allKeysExist = keysToCheck.every((key) => key in gemini);
 
@@ -61,48 +75,55 @@ const AnalyzeButton = ({
       if (error instanceof Error) message = error.message;
 
       // error report
-      await fetchData({
-        path: "/api/http",
-        body: {
-          method: "POST",
-          body: JSON.stringify({
+      try {
+        await fetchData({
+          path: "/api/http",
+          body: {
             method: "POST",
-            url: "AnalyzeButton",
-            request_body: {
-              body: JSON.stringify(gemini),
-            },
-            response_body: {
-              error: message,
-            },
-            status_code: 500,
-          }),
-        },
-      });
+            body: JSON.stringify({
+              method: "POST",
+              url: "AnalyzeButton",
+              request_body: {
+                body: JSON.stringify(gemini),
+              },
+              response_body: {
+                error: message,
+              },
+              status_code: 500,
+            }),
+          },
+        });
+      } catch (reportError) {
+        console.error(reportError);
+      }
 
-      alert("죄송합니다. 에러가 발생했습니다.\n다시 시도해주세요.");
-      return (location.href = process.env.NEXT_PUBLIC_HOST_NAME!);
+      setError("분석 중 문제가 발생했어요. 다시 시도해주세요.");
     }
-  };
-
-  const handleButtonClick = async () => {
-    await fetchData({
-      path: `/api${href}`,
-      body: body,
-    });
-
-    await handleInsertAnalyze();
   };
 
   return (
     <>
       <Loading text="대화 분석 중..." isLoading={geminiIsLoading} />
-      <button
-        disabled={disabled}
-        onClick={() => handleButtonClick()}
-        className={`h-fit mb-2 p-2 text-regular-12 text-white bg-secondary animate-pulse w-full flex items-center justify-center rounded-xl`}
-      >
-        {children}
-      </button>
+      {error ? (
+        <div className="w-full flex items-center justify-between gap-2 bg-red-50 text-red-500 text-regular-14 rounded-md px-3 py-2">
+          <span className="min-w-0 line-clamp-3">⚠️ {error}</span>
+          <button
+            type="button"
+            onClick={() => handleButtonClick()}
+            className="shrink-0 text-bold-14 underline"
+          >
+            재시도
+          </button>
+        </div>
+      ) : (
+        <button
+          disabled={disabled}
+          onClick={() => handleButtonClick()}
+          className={`h-fit mb-2 p-2 text-regular-12 text-white bg-secondary animate-pulse w-full flex items-center justify-center rounded-xl`}
+        >
+          {children}
+        </button>
+      )}
     </>
   );
 };

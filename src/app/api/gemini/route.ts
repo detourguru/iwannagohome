@@ -5,6 +5,8 @@ import {
 } from "@google/generative-ai";
 import { NextRequest, NextResponse } from "next/server";
 
+export const maxDuration = 60;
+
 export async function POST(request: NextRequest) {
   const { script } = await request.json();
 
@@ -21,6 +23,10 @@ export async function POST(request: NextRequest) {
         threshold: HarmBlockThreshold.BLOCK_NONE,
       },
     ],
+    generationConfig: {
+      responseMimeType: "application/json",
+      thinkingConfig: { thinkingBudget: 0 },
+    } as any,
   });
 
   try {

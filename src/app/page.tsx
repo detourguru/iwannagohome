@@ -4,7 +4,7 @@ import Button from "@/components/Button/Button";
 import useFetchData from "@/hooks/useFetchData";
 
 export default function Home() {
-  const { data } = useFetchData({ path: "/result" });
+  const { data: count } = useFetchData({ path: "/result" });
   return (
     <section className="grid grid-cols-1 gap-5 w-full">
       <div className="grid grid-cols-1 gap-1 text-regular-20 text-center leading-9">
@@ -18,7 +18,7 @@ export default function Home() {
       </div>
       <div className="grid grid-cols-1 gap-5 w-5/6 place-self-center">
         <div className="bg-gray-100 h-[4vw] px-7 py-8 text-regular-14 flex items-center justify-center rounded-xl">
-          🤯 현재까지 <span className="text-bold-14">&nbsp;{data?.length}</span>
+          🤯 현재까지 <span className="text-bold-14">&nbsp;{count}</span>
           명이 연인과 대화했어요
         </div>
         <Button href="scene" variant="default">

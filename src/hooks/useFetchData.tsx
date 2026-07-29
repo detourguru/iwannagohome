@@ -10,7 +10,7 @@ interface FetchDataProps {
 }
 export default function useFetchData({ path, body }: FetchDataProps) {
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<any[] | null>(null);
+  const [data, setData] = useState<any | any[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetching = async () => {
