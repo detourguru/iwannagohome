@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import useGeminiChat from "@/hooks/useGeminiChat";
 import Loading from "../Loading/Loading";
 import fetchData from "@/utils/fetchData";
+import errorReport from "@/utils/errorReport";
 
 export interface AnalyzeButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   href: string;
@@ -71,27 +72,16 @@ const AnalyzeButton = ({
 
       return (location.href = href);
     } catch (error) {
-      let message;
-      if (error instanceof Error) message = error.message;
+      const message =
+        error instanceof Error ? error.message : "알 수 없는 에러";
 
-      // error report
       try {
-        await fetchData({
-          path: "/api/http",
-          body: {
-            method: "POST",
-            body: JSON.stringify({
-              method: "POST",
-              url: "AnalyzeButton",
-              request_body: {
-                body: JSON.stringify(gemini),
-              },
-              response_body: {
-                error: message,
-              },
-              status_code: 500,
-            }),
-          },
+        await errorReport({
+          method: "POST",
+          url: "AnalyzeButton",
+          requestBody: gemini,
+          message,
+          status: 500,
         });
       } catch (reportError) {
         console.error(reportError);

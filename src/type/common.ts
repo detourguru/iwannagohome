@@ -34,3 +34,8 @@ type ChatAnalyzeType = {
   result: { title: string; context: string; emoji: string };
   advise: string;
 };
+
+export type HttpError = {
+  error: string;
+  status: number;
+};

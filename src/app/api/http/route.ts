@@ -1,11 +1,10 @@
-import errorReport from "@/utils/errorReport";
 import { supabase } from "@/utils/supabaseClient";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const req = await request.json();
 
-  const { error, data, status } = await supabase.rpc("log_http_request", {
+  const { error, data } = await supabase.rpc("log_http_request", {
     p_method: req.method,
     p_url: req.url,
     p_request_body: req.request_body,
@@ -14,8 +13,11 @@ export async function POST(request: Request) {
   });
 
   if (error) {
-    errorReport(request, error, status, req);
-    return NextResponse.json({ message: error.message, status: 500, data });
+    console.error(error);
+    return NextResponse.json(
+      { message: error.message, status: 500, data },
+      { status: 500 },
+    );
   }
 
   return NextResponse.json({ message: "successfully inserted", status: 200 });

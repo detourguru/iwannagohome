@@ -3,6 +3,7 @@ import {
   HarmCategory,
   HarmBlockThreshold,
 } from "@google/generative-ai";
+import { errorResponse } from "@/utils/errorResponse";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -32,6 +33,6 @@ export async function POST(request: NextRequest) {
   } catch (e) {
     console.error(e);
     const message = e instanceof Error ? e.message : "Unknown error";
-    return NextResponse.json({ error: message }, { status: 502 });
+    return errorResponse(message, 502);
   }
 }

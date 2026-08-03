@@ -1,3 +1,4 @@
+import { errorResponse } from "@/utils/errorResponse";
 import {
   GoogleGenerativeAI,
   HarmBlockThreshold,
@@ -35,6 +36,6 @@ export async function POST(request: NextRequest) {
   } catch (e) {
     console.error(e);
     const message = e instanceof Error ? e.message : "Unknown error";
-    return NextResponse.json({ error: message }, { status: 502 });
+    return errorResponse(message, 502);
   }
 }
