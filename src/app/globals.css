@@ -15,9 +15,22 @@
 
 @layer base {
   :root {
-    --primary: #ffe236;
-    --gray-50: #f5f5f5;
-    --gray-100: #d9d9d9;
-    --secondary: #14213d;
+    --primary: #7fd8be;
+    --primary-dark: #4fbe9e;
+    --gray-50: #f4fbf8;
+    --gray-100: #e3f1ee;
+    --secondary: #6e56a6;
+    --ink: #2e3a3a;
+  }
+
+  body {
+    color: var(--ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-bounce,
+    .animate-pulse {
+      animation: none;
+    }
   }
 }

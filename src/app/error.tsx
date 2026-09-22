@@ -16,7 +16,7 @@ const ErrorPage = () => {
           height={0}
           sizes="100vw"
         />
-        <span className="text-bold-34">500</span>
+        <span className="text-bold-34 font-heading">500</span>
       </div>
       <span className="text-bold-24">예상하지 못한 에러가 발생했습니다.</span>
       <Button href="/" variant="home">

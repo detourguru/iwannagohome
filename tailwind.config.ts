@@ -12,11 +12,15 @@ const config: Config = {
     extend: {
       colors: {
         primary: "var(--primary)",
+        "primary-dark": "var(--primary-dark)",
         secondary: "var(--secondary)",
         gray: {
           50: "var(--gray-50)",
           100: "var(--gray-100)",
         },
+      },
+      fontFamily: {
+        heading: ["'Gowun Dodum'", "sans-serif"],
       },
       fontSize: {
         "regular-12": ["12px", { lineHeight: "140%", fontWeight: 400 }],

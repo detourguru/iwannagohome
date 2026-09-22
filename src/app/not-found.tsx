@@ -14,7 +14,7 @@ const NotFound = () => {
           height={0}
           sizes="100vw"
         />
-        <span className="text-bold-34">404</span>
+        <span className="text-bold-34 font-heading">404</span>
       </div>
       <span className="text-bold-24">이곳에는 아무것도 없습니다.</span>
       <Button href="/" variant="home">

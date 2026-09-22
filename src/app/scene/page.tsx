@@ -15,7 +15,7 @@ export default function Scene() {
 
   return (
     <section className="w-full h-full overflow-auto flex flex-col gap-5">
-      <div className="text-bold-24 text-center">상황 선택</div>
+      <div className="text-bold-24 font-heading text-center">상황 선택</div>
       <ul className="grid grid-cols-1 gap-5">
         {baseStory.map((data) => {
           return <SceneCard key={data.id} story={data} />;

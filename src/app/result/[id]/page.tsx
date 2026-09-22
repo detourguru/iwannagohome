@@ -16,7 +16,7 @@ export default function Result() {
     <div className="w-full h-full flex flex-col text-center gap-5 break-keep">
       <div className="h-full overflow-auto flex flex-col gap-5">
         <header className="flex flex-col gap-3">
-          <span className="text-bold-34">
+          <span className="text-bold-34 font-heading">
             {data[0].base_story.story_info.title}
           </span>
           <span className="text-bold-70">
