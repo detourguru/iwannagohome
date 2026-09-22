@@ -72,6 +72,7 @@ export default function useChatSession(
   };
 
   const handleSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.nativeEvent.isComposing) return;
     if (e.key === "Enter") {
       sendChat(e.currentTarget.value);
     }

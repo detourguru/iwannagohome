@@ -102,8 +102,8 @@ export default function SceneDetail() {
           ))}
         </section>
         <div ref={bottomRef} />
-        <div className="flex flex-col gap-2 text-center text-regular-14 opacity-40">
-          <span className="">현재 대화 {count}턴 / 최대 15턴</span>
+        <div className="flex flex-col gap-2 text-center text-regular-14">
+          <span className="text-gray-600">현재 대화 {count}턴 / 최대 15턴</span>
           <span className="text-gray-500">
             5턴 이후부터 분석을 요청할 수 있어요.
           </span>

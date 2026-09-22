@@ -8,10 +8,11 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "h-[4vw] px-7 py-8 text-bold-20 bg-primary animate-bounce",
-        home: "h-fit py-3 text-bold-20 bg-primary text-black",
-        replay: "h-fit py-3 text-bold-20 text-white bg-secondary",
-        share: "h-fit py-3 text-bold-20 text-white bg-gray-500",
+        default:
+          "h-[4vw] px-7 py-8 text-bold-20 font-heading bg-primary animate-bounce",
+        home: "h-fit py-3 text-bold-20 font-heading bg-primary",
+        replay: "h-fit py-3 text-bold-20 font-heading text-white bg-secondary",
+        share: "h-fit py-3 text-bold-20 font-heading text-white bg-gray-500",
         analyze:
           "h-fit mb-4 p-2 text-regular-12 text-white bg-secondary animate-pulse",
       },
@@ -30,19 +31,30 @@ export interface ButtonProps
 }
 
 const Button = ({ children, variant, href, body }: ButtonProps) => {
-  const { handleButtonClick } = useHandleResultEvent({
+  const { handleButtonClick, copied } = useHandleResultEvent({
     variant: variant,
     href: href,
     body: body,
   });
 
   return (
-    <button
-      onClick={() => handleButtonClick()}
-      className={`${buttonVariants({ variant })}`}
-    >
-      {children}
-    </button>
+    <div className="relative w-full">
+      {copied && (
+        <span
+          role="status"
+          aria-live="polite"
+          className="absolute -top-9 left-1/2 -translate-x-1/2 text-regular-12 text-white bg-secondary px-3 py-1.5 rounded-full whitespace-nowrap"
+        >
+          복사 되었어요 🔗
+        </span>
+      )}
+      <button
+        onClick={() => handleButtonClick()}
+        className={`${buttonVariants({ variant })}`}
+      >
+        {children}
+      </button>
+    </div>
   );
 };
 
